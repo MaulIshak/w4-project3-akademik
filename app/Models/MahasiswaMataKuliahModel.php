@@ -4,15 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MataKuliahModel extends Model
+class MahasiswaMataKuliahModel extends Model
 {
-    protected $table            = 'mata_kuliah';
-    protected $primaryKey       = 'id_mata_kuliah';
+    protected $table            = 'mahasiswa_mata_kuliah';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_mata_kuliah', 'nama_mata_kuliah', 'sks'];
+    protected $allowedFields    = ['nim', 'id_mata_kuliah', 'tanggal_mengambil'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
