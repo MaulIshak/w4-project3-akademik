@@ -17,8 +17,12 @@ $routes->get('/auth/login', 'AuthController::index');
 $routes->get('/admin', 'AdminController::index');
 $routes->get('/admin/dashboard', 'AdminController::index');
 $routes->get('/admin/mahasiswa', 'AdminController::list_mahasiswa');
+$routes->get('/admin/mahasiswa/detail', 'AdminController::detail_mahasiswa');
 $routes->get('/admin/mahasiswa/create', 'AdminController::create_mahasiswa');
-$routes->get('/admin/mahasiswa/edit/(:nim)', 'AdminController::edit_mahasiswa/$1');
+$routes->get('/admin/mahasiswa/edit', 'AdminController::edit_mahasiswa');
+$routes->get('/admin/matakuliah', 'AdminController::mata_kuliah');
+$routes->get('/admin/matakuliah/detail', 'AdminController::detail_mata_kuliah');
+$routes->get('/admin/matakuliah/edit', 'AdminController::edit_mata_kuliah');
 
 
 // Routes mahasiswa

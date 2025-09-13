@@ -9,38 +9,37 @@
   </div>
 </header>
 
-<!-- Navbar -->
+<!-- Navbar Mahasiswa -->
 <nav class="navbar navbar-expand-lg bg-polban-primary" data-bs-theme="dark">
   <div class="container-fluid"> 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mahasiswaNavbar" aria-controls="mahasiswaNavbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="mahasiswaNavbar">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/admin/dashboard">Home</a>
+          <a class="nav-link" href="/mahasiswa/dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/admin/mahasiswa">Mahasiswa</a>
+          <a class="nav-link" href="/mahasiswa/matakuliah">Ambil Mata Kuliah</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/admin/matakuliah">Mata Kuliah</a>
+          <a class="nav-link" href="/mahasiswa/profile">Profil Saya</a>
         </li>
       </ul>
       <form action="/auth/logout" method="post">
-        <button class="btn btn-danger">Logout</button>
+          <button type="submit" class="btn btn-danger">Logout</button>
       </form>
     </div>
   </div>
 </nav>
 
-  <main class="p-3 min-h-vh">
+<main class="p-3 min-h-vh">
     <?= $this->renderSection('main-content')?>
-  </main>
+</main>
 
-  <footer class="bg-dark text-center p-3 text-light">
+<footer class="bg-dark text-center p-3 text-light">
     &copy; Polban <?= date('Y') ?>
-  </footer>
-
+</footer>
 
 <?= $this->endsection() ?>
