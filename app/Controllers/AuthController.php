@@ -9,6 +9,7 @@ class AuthController extends BaseController
 {
     public function index()
     {
-        return view('/auth/login');
+        $data['title'] = 'Login';
+        return view('/auth/login', $data);
     }
 }

@@ -18,13 +18,13 @@
     <div class="collapse navbar-collapse" id="mahasiswaNavbar">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="/mahasiswa/dashboard">Dashboard</a>
+          <a class="nav-link <?= $title=='Dashboard Mahasiswa' ? 'active' : '' ?>" href="/mahasiswa/dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/mahasiswa/matakuliah">Ambil Mata Kuliah</a>
+          <a class="nav-link <?= $title=='Mata Kuliah' ? 'active' : '' ?>" href="/mahasiswa/matakuliah">Ambil Mata Kuliah</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/mahasiswa/profile">Profil Saya</a>
+        <li class="nav-item ">
+          <a class="nav-link <?= $title=='Profil Mahasiswa' ? 'active' : '' ?>" href="/mahasiswa/profile">Profil Saya</a>
         </li>
       </ul>
       <form action="/auth/logout" method="post">

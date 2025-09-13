@@ -6,7 +6,7 @@
 
 <!-- Form untuk membatalkan mata kuliah -->
 <div class="card mb-4">
-    <div class="card-header bg-polban-primary text-white">
+    <div class="card-header">
         Mata Kuliah yang Sudah Diambil
     </div>
     <div class="card-body">
@@ -46,7 +46,7 @@
 
 <!-- Form untuk mengambil mata kuliah baru -->
 <div class="card">
-    <div class="card-header bg-polban-primary text-white">
+    <div class="card-header">
         Mata Kuliah Tersedia
     </div>
     <div class="card-body">

@@ -11,44 +11,48 @@ class AdminController extends BaseController
     // View
     public function index()
     {
-        return view('/admin/dashboard');
+        $data['title'] = 'Dashboard Admin';
+        return view('/admin/dashboard', $data);
     }
     public function create_mahasiswa()
     {
-        return view('/admin/mahasiswa/create');
+        $data['title'] = 'Create Mahasiswa';
+        return view('/admin/mahasiswa/create', $data);
     }
     public function edit_mahasiswa()
     {
-        return view('/admin/mahasiswa/edit');
-    }
-    public function tambah_mahasiswa()
-    {
-        return view('/admin/mahasiswa/create');
+        $data['title'] = 'Edit Mahasiswa';
+        return view('/admin/mahasiswa/edit', $data);
     }
 
     public function list_mahasiswa(){
         $model = new MahasiswaModel();
         
         $data['mahasiswa'] = $model->getMahasiwa();
-
+        $data['title'] = 'Daftar Mahasiswa';
         return view('/admin/mahasiswa/index', $data);
     }
 
     public function detail_mahasiswa(){
-        return view('/admin/mahasiswa/detail');
+        $data['title'] = 'Detail Mahasiswa';
+        return view('/admin/mahasiswa/detail' ,$data);
     }
 
     public function mata_kuliah(){
-        return view('/admin/matakuliah/index');
+        $data['title'] = 'Daftar Mata Kuliah';
+        return view('/admin/matakuliah/index', $data);
     }
     public function detail_mata_kuliah(){
-        return view('/admin/matakuliah/detail');
+        $data['title'] = 'Detail Mata Kuliah';
+        return view('/admin/matakuliah/detail', $data);
     }
     public function edit_mata_kuliah(){
-        return view('/admin/matakuliah/edit');
+        $data['title'] = 'Edit Mata Kuliah';
+        return view('/admin/matakuliah/edit', $data);
     }
     public function tambah_mata_kuliah(){
-        return view('/admin/matakuliah/create');
+        $data['title'] = 'Tambah Mata Kuliah';
+        return view('/admin/matakuliah/create', $data);
     }
 
 }

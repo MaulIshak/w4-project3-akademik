@@ -18,13 +18,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/admin/dashboard">Home</a>
+          <a class="nav-link <?= $title=='Dashboard Admin' ? 'active' : '' ?>" aria-current="page" href="/admin/dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/admin/mahasiswa">Mahasiswa</a>
+          <a class="nav-link <?= $title=='Daftar Mahasiswa' ? 'active' : '' ?>" href="/admin/mahasiswa">Mahasiswa</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/admin/matakuliah">Mata Kuliah</a>
+          <a class="nav-link <?= $title=='Daftar Mata Kuliah' ? 'active' : '' ?>" href="/admin/matakuliah">Mata Kuliah</a>
         </li>
       </ul>
       <form action="/auth/logout" method="post">
@@ -33,7 +33,6 @@
     </div>
   </div>
 </nav>
-
   <main class="p-3 min-h-vh">
     <?= $this->renderSection('main-content')?>
   </main>

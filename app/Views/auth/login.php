@@ -1,7 +1,7 @@
 <?= $this->extend('layout/base_template') ?>
 
 <?= $this->section('content') ?>
-<div class="container">
+<div class="container bg-secondary">
     <div class="row vh-100 d-flex justify-content-center align-items-center">
         <div class="col-md-5">
             <div class="card shadow-sm">
@@ -13,15 +13,15 @@
                     </div>
                     <form>
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username / NIM</label>
-                            <input type="text" class="form-control" id="username" placeholder="Masukkan username atau NIM">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Masukkan username">
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" placeholder="Masukkan password">
                         </div>
                         <div class="d-grid">
-                            <button type="submit" class="btn bg-polban-primary text-white">Login</button>
+                            <button type="submit" class="btn btn-primary bg-polban-primary">Login</button>
                         </div>
                     </form>
                 </div>

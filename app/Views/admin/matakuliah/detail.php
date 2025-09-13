@@ -52,8 +52,8 @@
             </table>
         </div>
         
-        <div class="mt-4 d-flex justify-content-end">
-             <a href="/admin/matakuliah" class="btn btn-secondary">Kembali ke Daftar</a>
+        <div class="mt-4 d-flex justify-content-start">
+             <a href="/admin/matakuliah" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
 </div>
