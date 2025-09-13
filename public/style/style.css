@@ -1,0 +1,30 @@
+.bg-polban-primary {
+  background-color: #00008c;
+}
+.bg-polban-secondary {
+  background-color: #ff8000;
+}
+
+.text-polban-primary {
+  color: #00008c;
+}
+
+.text-polban-secondary {
+  color: #ff8000;
+}
+
+.hero-section div {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.9)), url("../img/polban.jpeg");
+  background-size: cover;
+  background-position: center bottom;
+  height: 150px;
+  background-color: white;
+}
+
+.table thead th {
+  background-color: #ff8000;
+}
+
+.min-h-vh {
+  min-height: 65vh;
+}
