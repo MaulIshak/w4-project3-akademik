@@ -46,19 +46,19 @@ class MahasiswaModel extends Model
 
     public function getMahasiwa($nim = false){
         if($nim){
-            return $this->select('mahasiswa.*, users.username, user.nama_lengkap')
+            return $this->select('mahasiswa.*, users.username, users.nama_lengkap')
                     ->join('users', 'users.user_id = mahasiswa.nim')
                     ->where('mahasiwa.nim', $nim)
                     ->first();
         }else{
-            return $this->select('mahasiswa.*, users.username, user.nama_lengkap')
+            return $this->select('mahasiswa.nim, mahasiswa.tahun_masuk, users.nama_lengkap')
                     ->join('users', 'users.user_id = mahasiswa.nim')
                     ->findAll();
         }
     }
 
     public function getMahasiswaByTahun($tahun){
-        return $this->select('mahasiswa.*, users.username, user.nama_lengkap')
+        return $this->select('mahasiswa.*, users.username, users.nama_lengkap')
                     ->join('users', 'users.user_id = mahasiswa.nim')
                     ->where('tahun_masuk', $tahun)
                     ->findAll();

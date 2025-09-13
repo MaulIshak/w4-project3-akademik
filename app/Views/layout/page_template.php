@@ -47,7 +47,7 @@
     <?= $this->renderSection('main-content')?>
   </main>
 
-  <footer class="bg-dark text-center p-2 text-light">
+  <footer class="bg-dark text-center p-3 text-light">
     
     &copy; Polban 2025
 

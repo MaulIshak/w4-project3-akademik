@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\MahasiswaModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class AdminController extends BaseController
@@ -21,7 +22,11 @@ class AdminController extends BaseController
         return view('/admin/dashboard/edit');
     }
     public function list_mahasiswa(){
-        return view('/admin/mahasiswa/index');
+        $model = new MahasiswaModel();
+        
+        $data['mahasiswa'] = $model->getMahasiwa();
+        
+        return view('/admin/mahasiswa/index', $data);
     }
 
 }
