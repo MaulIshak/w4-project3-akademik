@@ -6,21 +6,20 @@
 <div class="card">
     <div class="card-body">
         <!-- Data contoh, nantinya akan di-pass dari controller -->
-        <?php $matakuliah = ['kode_mk' => 'IF101', 'nama_mk' => 'Dasar Pemrograman', 'sks' => 3]; ?>
         <div class="row">
             <div class="col-md-8">
                 <table class="table table-borderless">
                     <tr>
                         <th style="width: 200px;">Kode Mata Kuliah</th>
-                        <td>: <?= $matakuliah['kode_mk'] ?></td>
+                        <td>: <?= $mataKuliah['kode_mata_kuliah'] ?></td>
                     </tr>
                     <tr>
                         <th>Nama Mata Kuliah</th>
-                        <td>: <?= $matakuliah['nama_mk'] ?></td>
+                        <td>: <?= $mataKuliah['nama_mata_kuliah'] ?></td>
                     </tr>
                      <tr>
                         <th>Jumlah SKS</th>
-                        <td>: <?= $matakuliah['sks'] ?></td>
+                        <td>: <?= $mataKuliah['sks'] ?></td>
                     </tr>
                 </table>
             </div>
@@ -31,23 +30,28 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>NIM</th>
                         <th>Nama Lengkap</th>
                         <th>Tanggal Mengambil</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Data contoh mahasiswa, nantinya dari controller -->
+                <?php
+                $count = 1;
+                    if(!empty($mataKuliah['mahasiswa'])):
+                        foreach($mataKuliah['mahasiswa'] as $mhs):
+                ?>
                     <tr>
-                        <td>241511001</td>
-                        <td>John Doe</td>
-                        <td>2025-09-10</td>
+                        <td><?= $count++ ?></td>
+                        <td><?= $mhs['nim'] ?></td>
+                        <td><?= $mhs['nama_lengkap'] ?></td>
+                        <td><?= $mhs['tanggal_mengambil'] ?></td>
                     </tr>
-                     <tr>
-                        <td>241511016</td>
-                        <td>Maulana Ishak</td>
-                        <td>2025-09-11</td>
-                    </tr>
+                <?php
+                        endforeach;
+                    endif;
+                ?>
                 </tbody>
             </table>
         </div>

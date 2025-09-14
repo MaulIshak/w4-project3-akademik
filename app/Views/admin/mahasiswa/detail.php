@@ -1,12 +1,9 @@
 <?= $this->extend('layout/page_template') ?>
-
 <?= $this->section('main-content') ?>
 <h2 class="my-3 mb-4 fw-bold">Detail Mahasiswa</h2>
 
 <div class="card">
     <div class="card-body">
-        <!-- Anggap $mahasiswa sudah di-pass dari controller -->
-        <?php $mahasiswa = ['nim' => '241511001', 'nama_lengkap' => 'John Doe', 'tahun_masuk' => 2024]; ?>
         <div class="row">
             <div class="col-md-6">
                 <table class="table table-borderless">
@@ -30,23 +27,31 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Kode MK</th>
                     <th>Nama Mata Kuliah</th>
                     <th>SKS</th>
+                    <th>Tanggal Mengambil</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Contoh Data Mata Kuliah -->
+                <?php
+                $count = 1;
+                    if(!empty($mahasiswa['mata_kuliah'])):
+                        foreach($mahasiswa['mata_kuliah'] as $matkul):
+                ?>
                 <tr>
-                    <td>IF101</td>
-                    <td>Dasar Pemrograman</td>
-                    <td>3</td>
+                    <td><?= $count++ ?></td>
+                    <td><?= $matkul['kode_mata_kuliah'] ?></td>
+                    <td><?= $matkul['nama_mata_kuliah'] ?></td>
+                    <td><?= $matkul['sks'] ?></td>
+                    <td><?= $matkul['tanggal_mengambil'] ?></td>
                 </tr>
-                 <tr>
-                    <td>IF102</td>
-                    <td>Struktur Data</td>
-                    <td>3</td>
-                </tr>
+
+                <?php
+                        endforeach;
+                    endif;
+                ?>
             </tbody>
         </table>
         

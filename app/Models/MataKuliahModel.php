@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class MataKuliahModel extends Model
 {
     protected $table            = 'mata_kuliah';
-    protected $primaryKey       = 'id_mata_kuliah';
+    protected $primaryKey       = 'kode_mata_kuliah';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_mata_kuliah', 'nama_mata_kuliah', 'sks'];
+    protected $allowedFields    = ['kode_mata_kuliah', 'nama_mata_kuliah', 'sks'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -43,4 +43,20 @@ class MataKuliahModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getMataKuliahByNim($nim){
+        return $this->select('mata_kuliah.kode_mata_kuliah, mata_kuliah.nama_mata_kuliah, mata_kuliah.sks, mahasiswa_mata_kuliah.tanggal_mengambil ')
+        ->join('mahasiswa_mata_kuliah','mahasiswa_mata_kuliah.kode_mata_kuliah = mata_kuliah.kode_mata_kuliah' )
+        ->join('mahasiswa', 'mahasiswa.nim = mahasiswa_mata_kuliah.nim')
+        ->where('mahasiswa.nim', $nim)
+        ->findAll();
+    }
+
+    public function getMataKuliah($kode = false){
+        if($kode){
+            return $this->where('mata_kuliah.kode_mata_kuliah', $kode)->first();
+        }else{
+            return $this->findAll();
+        }
+    }
 }

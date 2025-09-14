@@ -8,12 +8,12 @@
         <form action="/admin/matakuliah/store" method="post">
             <?= csrf_field() ?>
             <div class="mb-3">
-                <label for="kode_mk" class="form-label">Kode Mata Kuliah</label>
-                <input type="text" class="form-control" id="kode_mk" name="kode_mk" placeholder="Contoh: IF101" required>
+                <label for="kode_mata_kuliah" class="form-label">Kode Mata Kuliah</label>
+                <input type="text" class="form-control" id="kode_mata_kuliah" name="kode_mata_kuliah" placeholder="Contoh: IF101" required>
             </div>
             <div class="mb-3">
-                <label for="nama_mk" class="form-label">Nama Mata Kuliah</label>
-                <input type="text" class="form-control" id="nama_mk" name="nama_mk" placeholder="Contoh: Dasar Pemrograman" required>
+                <label for="nama_mata_kuliah" class="form-label">Nama Mata Kuliah</label>
+                <input type="text" class="form-control" id="nama_mata_kuliah" name="nama_mata_kuliah" placeholder="Contoh: Dasar Pemrograman" required>
             </div>
             <div class="mb-3">
                 <label for="sks" class="form-label">Jumlah SKS</label>

@@ -48,7 +48,7 @@ class MahasiswaModel extends Model
         if($nim){
             return $this->select('mahasiswa.*, users.username, users.nama_lengkap')
                     ->join('users', 'users.user_id = mahasiswa.nim')
-                    ->where('mahasiwa.nim', $nim)
+                    ->where('mahasiswa.nim', $nim)
                     ->first();
         }else{
             return $this->select('mahasiswa.nim, mahasiswa.tahun_masuk, users.nama_lengkap')
@@ -62,5 +62,14 @@ class MahasiswaModel extends Model
                     ->join('users', 'users.user_id = mahasiswa.nim')
                     ->where('tahun_masuk', $tahun)
                     ->findAll();
+    }
+
+    public function getMahasiwaByMatkul($kode){
+    return $this->select('mahasiswa.nim, users.nama_lengkap, mahasiswa_mata_kuliah.tanggal_mengambil ')
+        ->join('users', 'users.user_id = mahasiswa.nim')
+        ->join('mahasiswa_mata_kuliah','mahasiswa_mata_kuliah.nim = mahasiswa.nim' )
+        ->join('mata_kuliah', 'mata_kuliah.kode_mata_kuliah = mahasiswa_mata_kuliah.kode_mata_kuliah')
+        ->where('mata_kuliah.kode_mata_kuliah', $kode)
+        ->findAll();
     }
 }

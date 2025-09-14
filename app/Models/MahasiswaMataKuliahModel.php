@@ -11,7 +11,7 @@ class MahasiswaMataKuliahModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nim', 'id_mata_kuliah', 'tanggal_mengambil'];
+    protected $allowedFields    = ['nim', 'kode_mata_kuliah', 'tanggal_mengambil'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

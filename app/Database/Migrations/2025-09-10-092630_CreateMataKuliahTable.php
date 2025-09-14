@@ -9,11 +9,9 @@ class CreateMataKuliahTable extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_mata_kuliah' => [
-                'type'       => 'INT',
+            'kode_mata_kuliah' => [
+                'type'       => 'VARCHAR',
                 'constraint' => 10,
-                'unsigned'   => true,
-                'auto_increment' => true,
             ],
             'nama_mata_kuliah' => [
                 'type'       => 'VARCHAR',
@@ -25,7 +23,7 @@ class CreateMataKuliahTable extends Migration
             ],
         ]);
 
-        $this->forge->addKey('id_mata_kuliah', true);
+        $this->forge->addKey('kode_mata_kuliah', true, true);
         $this->forge->createTable('mata_kuliah');
     }
 
