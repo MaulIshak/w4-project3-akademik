@@ -13,8 +13,8 @@
                     </div>
                     <form>
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Masukkan username">
+                            <label for="username" class="form-label">Username/Email</label>
+                            <input type="text" class="form-control" id="username" placeholder="Masukkan username atau email">
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label">Password</label>
