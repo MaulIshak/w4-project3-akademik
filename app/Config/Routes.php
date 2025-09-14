@@ -9,27 +9,32 @@ $routes->get('/', 'Home::index');
 
 
 // Routes auth
-// view routes
 $routes->get('/auth/login', 'AuthController::index');
+$routes->post('/auth/login', 'AuthController::login');
+$routes->post('/auth/logout', 'AuthController::logout');
 
-// Routes admin
-// view routes
-$routes->get('/admin', 'AdminController::index');
-$routes->get('/admin/dashboard', 'AdminController::index');
-$routes->get('/admin/mahasiswa', 'AdminController::list_mahasiswa');
-$routes->get('/admin/mahasiswa/detail/(:segment)', 'AdminController::detail_mahasiswa/$1');
-$routes->get('/admin/mahasiswa/create', 'AdminController::create_mahasiswa');
-$routes->get('/admin/mahasiswa/edit', 'AdminController::edit_mahasiswa');
-$routes->get('/admin/matakuliah', 'AdminController::mata_kuliah');
-$routes->get('/admin/matakuliah/detail/(:segment)', 'AdminController::detail_mata_kuliah/$1');
-$routes->get('/admin/matakuliah/edit', 'AdminController::edit_mata_kuliah');
+// Admin Routes Group (Protected by JWT Filter for 'admin' role)
+$routes->group('admin', ['filter' => 'jwt:admin'], static function ($routes) {
+    // view routes
+    $routes->get('/', 'AdminController::index');
+    $routes->get('dashboard', 'AdminController::index');
+    $routes->get('mahasiswa', 'AdminController::list_mahasiswa');
+    $routes->get('mahasiswa/detail/(:segment)', 'AdminController::detail_mahasiswa/$1');
+    $routes->get('mahasiswa/create', 'AdminController::create_mahasiswa');
+    $routes->get('mahasiswa/edit', 'AdminController::edit_mahasiswa');
+    $routes->get('matakuliah', 'AdminController::mata_kuliah');
+    $routes->get('matakuliah/detail/(:segment)', 'AdminController::detail_mata_kuliah/$1');
+    $routes->get('matakuliah/edit', 'AdminController::edit_mata_kuliah');
 
-// db routes
-$routes->post('/admin/mahasiswa/store', 'AdminController::store_mahasiswa');
+    // db routes
+    $routes->post('mahasiswa/store', 'AdminController::store_mahasiswa');
+});
 
-// Routes mahasiswa
-// view routes
-$routes->get('/mahasiswa', "MahasiswaController::index");
-$routes->get('/mahasiswa/dashboard', "MahasiswaController::index");
-$routes->get('/mahasiswa/matakuliah', "MahasiswaController::mata_kuliah");
-$routes->get('/mahasiswa/profile', "MahasiswaController::profile");
+// Mahasiswa Routes Group (Protected by JWT Filter for 'mahasiswa' role)
+$routes->group('mahasiswa', ['filter' => 'jwt:mahasiswa'], static function ($routes) {
+    // view routes
+    $routes->get('/', "MahasiswaController::index");
+    $routes->get('dashboard', "MahasiswaController::index");
+    $routes->get('matakuliah', "MahasiswaController::mata_kuliah");
+    $routes->get('profile', "MahasiswaController::profile");
+});
