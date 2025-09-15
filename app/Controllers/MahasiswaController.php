@@ -3,71 +3,140 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\MahasiswaMataKuliahModel;
 use App\Models\MahasiswaModel;
-use App\Models\MataKuliahModel;
-use CodeIgniter\HTTP\ResponseInterface;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-use CodeIgniter\I18n\Time;
+use App\Models\UserModel;
+
 class MahasiswaController extends BaseController
 {
-    protected $helpers = ['cookie'];
-    private $nim;
-
-    public function __construct()
-    {
-        $this->nim = JWT::decode(get_cookie('jwt_token'), new Key(getenv('JWT_SECRET_KEY'), 'HS256'))->user_id;
-    }
-    // Views controller
     public function index()
     {
-        $data['title'] = 'Dashboard Mahasiswa';
-        return view('mahasiswa/dashboard', $data);
+        $model = new MahasiswaModel();
+        $data['mahasiswa'] = $model->getMahasiwa();
+        $data['title'] = 'Daftar Mahasiswa';
+        return view('admin/mahasiswa/index', $data);
     }
-    public function profile()
+
+    public function create()
     {
-        $data['title'] = 'Profil Mahasiswa';
-        return view('mahasiswa/profile', $data);
+        $data['title'] = 'Tambah Mahasiswa';
+        return view('admin/mahasiswa/create', $data);
     }
-    public function mata_kuliah()
+
+    public function store()
     {
-        $data['title'] = 'Mata Kuliah';
+        $mahasiswaModel = new MahasiswaModel();
+        $userModel = new UserModel();
 
-        $modelMatkul = new MataKuliahModel();
+        $validation = \Config\Services::validation();
+        $validation->setRules($userModel->getValidationRules());
+        $validation->setRules($mahasiswaModel->getValidationRules());
 
-        $data['matkul_tersedia'] = $modelMatkul->getMataKuliahExceptNim($this->nim);
-        $data['matkul_diambil'] = $modelMatkul->getMataKuliahByNim($this->nim);
-
-        return view('mahasiswa/matakuliah', $data);
-    }
-
-    public function ambil_mata_kuliah(){
-        $model = new MahasiswaMataKuliahModel();
-        $kodeMatkul = $this->request->getPost('ambil_mk');
-        $data = [];
-        $i = 0;
-        if($kodeMatkul){
-            foreach($kodeMatkul as $kode){
-                $data[$i++] =[
-                    'nim' => $this->nim,
-                    'kode_mata_kuliah' => $kode,
-                    'tanggal_mengambil' => Time::now()
-                ];
-            }
-            
-            $model->insertBatch($data);
+        if (!$this->validate($validation->getRules())) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
-        return redirect()->to('/mahasiswa/matakuliah');
 
+        $userData = [
+            'user_id'      => $this->request->getPost('nim'),
+            'username'     => $this->request->getPost('username'),
+            'password'     => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'role'         => 'mahasiswa',
+            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+        ];
+        
+        $mahasiswaData = [
+            'nim'         => $this->request->getPost('nim'),
+            'tahun_masuk' => $this->request->getPost('tahun_masuk'),
+        ];
+
+        if ($userModel->insert($userData) && $mahasiswaModel->insert($mahasiswaData)) {
+            return redirect()->to('/admin/mahasiswa')->with('success', 'Data mahasiswa berhasil ditambahkan.');
+        }
+
+        return redirect()->back()->withInput()->with('error', 'Gagal menambahkan data mahasiswa.');
     }
 
-    public function hapus_mata_kuliah(){
-        $model = new MahasiswaMataKuliahModel();
-        $kode = $this->request->getPost('batal_mk');
+    public function detail($nim)
+    {
+        $mahasiswaModel = new MahasiswaModel();
+        $data['mahasiswa'] = $mahasiswaModel->getMahasiwaWithMatkul($nim);
 
-        $model->whereIn('mahasiswa_mata_kuliah.kode_mata_kuliah',$kode)->delete();
+        if (empty($data['mahasiswa'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Mahasiswa dengan NIM ' . $nim . ' tidak ditemukan');
+        }
 
-        return redirect()->to('/mahasiswa/matakuliah');
+        $data['title'] = 'Detail Mahasiswa';
+        return view('admin/mahasiswa/detail', $data);
+    }
+
+    public function edit($nim)
+    {
+        $model = new MahasiswaModel();
+        $data['mahasiswa'] = $model->getMahasiwa($nim);
+
+        if (empty($data['mahasiswa'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Mahasiswa dengan NIM ' . $nim . ' tidak ditemukan');
+        }
+        
+        $data['title'] = 'Edit Mahasiswa';
+        return view('admin/mahasiswa/edit', $data);
+    }
+
+    public function update($nim)
+    {
+        $mahasiswaModel = new MahasiswaModel();
+        $userModel = new UserModel();
+    
+        $validationRules = [
+            'nim'          => "required|numeric|exact_length[9]|is_unique[users.user_id,user_id,{$nim}]",
+            'nama_lengkap' => 'required|alpha_space|min_length[3]',
+            'username'     => "required|alpha_numeric|min_length[5]|is_unique[users.username,user_id,{$nim}]",
+            'tahun_masuk'  => 'required|numeric|exact_length[4]',
+            'password'     => 'permit_empty|min_length[8]',
+        ];
+
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $userData = [
+            'user_id'      => $this->request->getPost('nim'),
+            'username'     => $this->request->getPost('username'),
+            'nama_lengkap' => $this->request->getPost('nama_lengkap'),
+        ];
+        
+        if ($this->request->getPost('password')) {
+            $userData['password'] = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+        }
+
+        $mahasiswaData = [
+            'nim'         => $this->request->getPost('nim'),
+            'tahun_masuk' => $this->request->getPost('tahun_masuk'),
+        ];
+        
+        // Use transaction to ensure data consistency
+        $db = \Config\Database::connect();
+        $db->transStart();
+        
+        $userModel->update($nim, $userData);
+        $mahasiswaModel->update($nim, $mahasiswaData);
+        
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+             return redirect()->back()->withInput()->with('error', 'Gagal memperbarui data.');
+        }
+
+        return redirect()->to('/admin/mahasiswa')->with('success', 'Data mahasiswa berhasil diperbarui.');
+    }
+
+
+    public function delete($nim)
+    {
+        $userModel = new UserModel();
+        if ($userModel->delete($nim)) {
+            return redirect()->to('/admin/mahasiswa')->with('success', 'Data mahasiswa berhasil dihapus.');
+        }
+        
+        return redirect()->to('/admin/mahasiswa')->with('error', 'Gagal menghapus data mahasiswa.');
     }
 }

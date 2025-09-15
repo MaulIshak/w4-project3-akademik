@@ -1,34 +1,68 @@
 <?= $this->extend('layout/page_template') ?>
 
 <?= $this->section('main-content') ?>
+
+<?php $validation = \Config\Services::validation(); ?>
+
 <h2 class="my-3 mb-4 fw-bold">Tambah Mahasiswa Baru</h2>
 
 <div class="card">
     <div class="card-body">
-        <form action="/admin/mahasiswa/store" method="post">
+        <?php if(session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger" role="alert">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+
+        <form action="<?= route_to('admin.mahasiswa.store') ?>" method="post">
              <?= csrf_field() ?>
             <div class="mb-3">
                 <label for="nim" class="form-label">NIM</label>
-                <input type="text" class="form-control" id="nim" name="nim" required>
+                <input type="text" class="form-control <?= $validation->hasError('nim') ? 'is-invalid' : '' ?>" id="nim" name="nim" value="<?= old('nim') ?>" required>
+                <?php if ($validation->hasError('nim')): ?>
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('nim') ?>
+                    </div>
+                <?php endif; ?>
             </div>
              <div class="mb-3">
                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" required>
+                <input type="text" class="form-control <?= $validation->hasError('nama_lengkap') ? 'is-invalid' : '' ?>" id="nama_lengkap" name="nama_lengkap" value="<?= old('nama_lengkap') ?>" required>
+                 <?php if ($validation->hasError('nama_lengkap')): ?>
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('nama_lengkap') ?>
+                    </div>
+                <?php endif; ?>
             </div>
              <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <input type="text" class="form-control <?= $validation->hasError('username') ? 'is-invalid' : '' ?>" id="username" name="username" value="<?= old('username') ?>" required>
+                <?php if ($validation->hasError('username')): ?>
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('username') ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password Default</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control <?= $validation->hasError('password') ? 'is-invalid' : '' ?>" id="password" name="password" required>
+                <?php if ($validation->hasError('password')): ?>
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('password') ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="mb-3">
                 <label for="tahun_masuk" class="form-label">Tahun Masuk</label>
-                <input type="number" class="form-control" id="tahun_masuk" name="tahun_masuk" min="2000" max="2100" required>
+                <input type="number" class="form-control <?= $validation->hasError('tahun_masuk') ? 'is-invalid' : '' ?>" id="tahun_masuk" name="tahun_masuk" min="2000" max="2100" value="<?= old('tahun_masuk') ?>" required>
+                <?php if ($validation->hasError('tahun_masuk')): ?>
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('tahun_masuk') ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="d-flex justify-content-end">
-                <a href="/admin/mahasiswa" class="btn btn-secondary me-2">Batal</a>
+                <a href="<?= route_to('admin.mahasiswa') ?>" class="btn btn-secondary me-2">Batal</a>
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
         </form>

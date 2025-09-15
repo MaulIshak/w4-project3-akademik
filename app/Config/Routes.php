@@ -7,44 +7,49 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
-
-// Routes auth
-$routes->get('/auth/login', 'AuthController::index');
-$routes->post('/auth/login', 'AuthController::login');
-$routes->post('/auth/logout', 'AuthController::logout');
-
-// Admin Routes Group (Protected by JWT Filter for 'admin' role)
-$routes->group('admin', ['filter' => 'jwt:admin'], static function ($routes) {
-    // view routes
-    $routes->get('/', 'AdminController::index');
-    $routes->get('dashboard', 'AdminController::index');
-    $routes->get('mahasiswa', 'AdminController::list_mahasiswa');
-    $routes->get('mahasiswa/detail/(:segment)', 'AdminController::detail_mahasiswa/$1');
-    $routes->get('mahasiswa/create', 'AdminController::create_mahasiswa');
-    $routes->get('mahasiswa/edit/(:segment)', 'AdminController::edit_mahasiswa/$1');
-    $routes->get('matakuliah', 'AdminController::mata_kuliah');
-    $routes->get('matakuliah/create', 'AdminController::create_mata_kuliah');
-    $routes->get('matakuliah/detail/(:segment)', 'AdminController::detail_mata_kuliah/$1');
-    $routes->get('matakuliah/edit', 'AdminController::edit_mata_kuliah');
-
-    // db routes
-    // Mahasiswa
-    $routes->post('mahasiswa/store', 'AdminController::store_mahasiswa');
-    $routes->put('mahasiswa/update/(:segment)', 'AdminController::update_mahasiswa/$1');
-    $routes->delete('mahasiswa/delete/(:segment)', 'AdminController::delete_mahasiswa/$1');
-
-    // Mata kuliah
-    $routes->post('matakuliah/store', 'AdminController::store_mata_kuliah');
-
+// --- AUTHENTICATION ROUTES ---
+$routes->group('auth', static function ($routes) {
+    $routes->get('login', 'AuthController::index', ['as' => 'login.form']);
+    $routes->post('login', 'AuthController::login', ['as' => 'login.attempt']);
+    $routes->post('logout', 'AuthController::logout', ['as' => 'logout']);
 });
 
-// Mahasiswa Routes Group (Protected by JWT Filter for 'mahasiswa' role)
-$routes->group('mahasiswa', ['filter' => 'jwt:mahasiswa'], static function ($routes) {
-    // view routes
-    $routes->get('/', "MahasiswaController::index");
-    $routes->get('dashboard', "MahasiswaController::index");
-    $routes->get('matakuliah', "MahasiswaController::mata_kuliah");
-    $routes->get('profile', "MahasiswaController::profile");
-    $routes->post('matakuliah/ambil', "MahasiswaController::ambil_mata_kuliah");
-    $routes->delete('matakuliah/batal', "MahasiswaController::hapus_mata_kuliah");
+// --- ADMIN ROUTES ---
+$routes->group('admin', ['filter' => 'auth:admin'], static function ($routes) {
+    $routes->get('/', 'AdminController::index'); 
+    $routes->get('dashboard', 'AdminController::index');
+
+    // Mahasiswa CRUD
+    $routes->group('mahasiswa', static function ($routes) {
+        $routes->get('/', 'MahasiswaController::index', ['as' => 'admin.mahasiswa']);
+        $routes->get('create', 'MahasiswaController::create', ['as' => 'admin.mahasiswa.create']);
+        $routes->post('store', 'MahasiswaController::store', ['as' => 'admin.mahasiswa.store']);
+        $routes->get('detail/(:segment)', 'MahasiswaController::detail/$1', ['as' => 'admin.mahasiswa.detail']);
+        $routes->get('edit/(:segment)', 'MahasiswaController::edit/$1', ['as' => 'admin.mahasiswa.edit']);
+        $routes->put('update/(:segment)', 'MahasiswaController::update/$1', ['as' => 'admin.mahasiswa.update']);
+        $routes->delete('delete/(:segment)', 'MahasiswaController::delete/$1', ['as' => 'admin.mahasiswa.delete']);
+    });
+
+    // Mata Kuliah CRUD
+    $routes->group('matakuliah', static function ($routes) {
+        $routes->get('/', 'MataKuliahController::index', ['as' => 'admin.matakuliah']);
+        $routes->get('create', 'MataKuliahController::create', ['as' => 'admin.matakuliah.create']);
+        $routes->post('store', 'MataKuliahController::store', ['as' => 'admin.matakuliah.store']);
+        $routes->get('detail/(:segment)', 'MataKuliahController::detail/$1', ['as' => 'admin.matakuliah.detail']);
+        $routes->get('edit/(:segment)', 'MataKuliahController::edit/$1', ['as' => 'admin.matakuliah.edit']);
+        $routes->put('update/(:segment)', 'MataKuliahController::update/$1', ['as' => 'admin.matakuliah.update']);
+        $routes->delete('delete/(:segment)', 'MataKuliahController::delete/$1', ['as' => 'admin.matakuliah.delete']);
+    });
+});
+
+// --- MAHASISWA ROUTES ---
+$routes->group('mahasiswa', ['filter' => 'auth:mahasiswa'], static function ($routes) {
+    $routes->get('/', 'UserController::index');
+    $routes->get('dashboard', 'UserController::index', ['as' => 'mahasiswa.dashboard']);
+    $routes->get('profile', 'UserController::profile', ['as' => 'mahasiswa.profile']);
+    $routes->post('profile/update-password', 'UserController::update_password', ['as' => 'mahasiswa.password.update']);
+
+    $routes->get('matakuliah', 'UserController::mata_kuliah', ['as' => 'mahasiswa.matakuliah']);
+    $routes->post('matakuliah/ambil', 'UserController::ambil_mata_kuliah', ['as' => 'mahasiswa.matakuliah.ambil']);
+    $routes->delete('matakuliah/batal', 'UserController::hapus_mata_kuliah', ['as' => 'mahasiswa.matakuliah.batal']);
 });

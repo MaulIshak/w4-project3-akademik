@@ -6,7 +6,6 @@
 <div class="card">
     <div class="card-body">
         <!-- Anggap saja $matakuliah sudah di-pass dari controller -->
-        <?php $matakuliah = ['kode_mata_kuliah' => 'IF101', 'nama_mata_kuliah' => 'Dasar Pemrograman', 'sks' => 3]; ?>
         <form action="/admin/matakuliah/update/<?= $matakuliah['kode_mata_kuliah'] ?>" method="post">
             <?= csrf_field() ?>
             <input type="hidden" name="_method" value="PUT">

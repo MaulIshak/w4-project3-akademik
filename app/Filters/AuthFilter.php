@@ -25,7 +25,27 @@ class AuthFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        //
+        if (!session()->get('isLoggedIn')) {
+            return redirect()->to('/auth/login');
+        }
+
+        // Check for role-based access if arguments are provided
+        if (!empty($arguments)) {
+            $sessionRole = session()->get('role');
+            if (!in_array($sessionRole, $arguments)) {
+                // If the user's role is not in the allowed list, redirect them
+                // You might want to redirect to a generic access denied page
+                // or back to their respective dashboard.
+                if ($sessionRole === 'admin') {
+                    return redirect()->to('/admin/dashboard');
+                }
+                if ($sessionRole === 'mahasiswa') {
+                    return redirect()->to('/mahasiswa/dashboard');
+                }
+                // Fallback for any other roles or if dashboard is not suitable
+                return redirect()->to('/');
+            }
+        }
     }
 
     /**

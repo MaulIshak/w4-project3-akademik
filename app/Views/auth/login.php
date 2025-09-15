@@ -1,6 +1,7 @@
 <?= $this->extend('layout/base_template') ?>
 
 <?= $this->section('content') ?>
+<?php $validation = \Config\Services::validation(); ?>
 <div class="container bg-secondary">
     <div class="row vh-100 d-flex justify-content-center align-items-center">
         <div class="col-md-5">
@@ -23,16 +24,31 @@
                             <?= session()->getFlashdata('error') ?>
                         </div>
                     <?php endif; ?>
+                     <?php if($validation->getErrors()): ?>
+                        <div class="alert alert-danger" role="alert">
+                           Mohon periksa kembali inputan Anda.
+                        </div>
+                    <?php endif; ?>
 
-                    <form action="<?= base_url('/auth/login') ?>" method="post">
+                    <form action="<?= route_to('login.attempt') ?>" method="post">
                         <?= csrf_field() ?>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" value="<?= old('username') ?>">
+                            <input type="text" class="form-control <?= $validation->hasError('username') ? 'is-invalid' : '' ?>" id="username" name="username" placeholder="Masukkan username" value="<?= old('username') ?>">
+                             <?php if ($validation->hasError('username')): ?>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('username') ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password">
+                            <input type="password" class="form-control <?= $validation->hasError('password') ? 'is-invalid' : '' ?>" id="password" name="password" placeholder="Masukkan password">
+                             <?php if ($validation->hasError('password')): ?>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('password') ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary bg-polban-primary">Login</button>

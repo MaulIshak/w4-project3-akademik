@@ -8,68 +8,45 @@ class MahasiswaModel extends Model
 {
     protected $table            = 'mahasiswa';
     protected $primaryKey       = 'nim';
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = ['nim', 'tahun_masuk'];
 
-    protected bool $allowEmptyInserts = false;
-    protected bool $updateOnlyChanged = true;
-
-    protected array $casts = [];
-    protected array $castHandlers = [];
-
-    // Dates
-    protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
-
     // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+    protected $validationRules = [
+        'nim'         => 'required|numeric|exact_length[9]|is_unique[mahasiswa.nim]',
+        'tahun_masuk' => 'required|numeric|exact_length[4]',
+    ];
+    protected $validationMessages = [
+        'nim' => [
+            'is_unique' => 'NIM sudah terdaftar.',
+            'exact_length' => 'NIM harus 9 digit.'
+        ]
+    ];
 
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
 
-    public function getMahasiwa($nim = false){
-        if($nim){
-            return $this->select('mahasiswa.*, users.username, users.nama_lengkap, users.password, ')
-                    ->join('users', 'users.user_id = mahasiswa.nim')
-                    ->where('mahasiswa.nim', $nim)
-                    ->first();
-        }else{
-            return $this->select('mahasiswa.nim, mahasiswa.tahun_masuk, users.nama_lengkap')
-                    ->join('users', 'users.user_id = mahasiswa.nim')
-                    ->findAll();
+    public function getMahasiwa($nim = false)
+    {
+        if ($nim) {
+            return $this->select('mahasiswa.*, users.username, users.nama_lengkap, users.password')
+                ->join('users', 'users.user_id = mahasiswa.nim')
+                ->where('mahasiswa.nim', $nim)
+                ->first();
         }
+
+        return $this->select('mahasiswa.nim, mahasiswa.tahun_masuk, users.nama_lengkap')
+            ->join('users', 'users.user_id = mahasiswa.nim')
+            ->findAll();
     }
 
-    public function getMahasiswaByTahun($tahun){
-        return $this->select('mahasiswa.*, users.username, users.nama_lengkap')
-                    ->join('users', 'users.user_id = mahasiswa.nim')
-                    ->where('tahun_masuk', $tahun)
-                    ->findAll();
-    }
-
-    public function getMahasiwaByMatkul($kode){
-    return $this->select('mahasiswa.nim, users.nama_lengkap, mahasiswa_mata_kuliah.tanggal_mengambil ')
-        ->join('users', 'users.user_id = mahasiswa.nim')
-        ->join('mahasiswa_mata_kuliah','mahasiswa_mata_kuliah.nim = mahasiswa.nim' )
-        ->join('mata_kuliah', 'mata_kuliah.kode_mata_kuliah = mahasiswa_mata_kuliah.kode_mata_kuliah')
-        ->where('mata_kuliah.kode_mata_kuliah', $kode)
-        ->findAll();
+    public function getMahasiwaWithMatkul($nim)
+    {
+        $mahasiswa = $this->getMahasiwa($nim);
+        if ($mahasiswa) {
+            $matkulModel = new MataKuliahModel();
+            $mahasiswa['mata_kuliah'] = $matkulModel->getMataKuliahByNim($nim);
+        }
+        return $mahasiswa;
     }
 }
