@@ -51,6 +51,17 @@ class MataKuliahModel extends Model
         ->where('mahasiswa.nim', $nim)
         ->findAll();
     }
+    public function getMataKuliahExceptNim($nim){
+        // Subquery untuk mendapatkan semua kode mata kuliah yang diambil oleh NIM tertentu.
+        $subquery = $this->db->table('mahasiswa_mata_kuliah')
+                            ->select('kode_mata_kuliah')
+                            ->where('nim', $nim);
+
+        // Query utama: pilih semua mata kuliah yang kodenya tidak ada di dalam hasil subquery.
+        return $this->select('kode_mata_kuliah, nama_mata_kuliah, sks')
+                    ->whereNotIn('kode_mata_kuliah', $subquery)
+                    ->findAll();
+    }
 
     public function getMataKuliah($kode = false){
         if($kode){

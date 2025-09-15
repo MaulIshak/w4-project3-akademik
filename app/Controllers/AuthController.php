@@ -76,7 +76,6 @@ class AuthController extends BaseController
 
         $token = JWT::encode($payload, $key, 'HS256');
 
-        // --- PERUBAHAN UTAMA DI SINI ---
         // Menggunakan Response Object untuk mengatur cookie.
         // Metode ini secara otomatis akan mengambil pengaturan dari app/Config/Cookie.php
         // seperti 'domain', 'path', 'secure', 'httponly', dll.

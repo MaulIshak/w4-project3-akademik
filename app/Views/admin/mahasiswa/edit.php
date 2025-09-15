@@ -6,13 +6,12 @@
 <div class="card">
     <div class="card-body">
         <!-- Anggap $mahasiswa sudah di-pass dari controller -->
-        <?php $mahasiswa = ['nim' => '241511001', 'nama_lengkap' => 'John Doe', 'tahun_masuk' => 2024, 'username' => 'johndoe']; ?>
-        <form action="/admin/mahasiswa/update/<?= $mahasiswa['nim'] ?>" method="post">
+        <form action="/admin/mahasiswa/update/<?= $mahasiswa['nim']?> ?>" method="post">
             <?= csrf_field() ?>
             <input type="hidden" name="_method" value="PUT">
             <div class="mb-3">
                 <label for="nim" class="form-label">NIM</label>
-                <input type="text" class="form-control" id="nim" name="nim" value="<?= $mahasiswa['nim'] ?>" readonly>
+                <input type="text" class="form-control" id="nim" name="nim" value="<?= $mahasiswa['nim'] ?>">
             </div>
              <div class="mb-3">
                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
@@ -27,7 +26,7 @@
                 <input type="number" class="form-control" id="tahun_masuk" name="tahun_masuk" min="2000" max="2100" value="<?= $mahasiswa['tahun_masuk'] ?>" required>
             </div>
              <div class="mb-3">
-                <label for="password" class="form-label">Reset Password (Opsional)</label>
+                <label for="password" class="form-label">Reset Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Isi untuk mereset password">
             </div>
             <div class="d-flex justify-content-end">

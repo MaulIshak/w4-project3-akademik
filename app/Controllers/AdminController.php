@@ -22,10 +22,17 @@ class AdminController extends BaseController
         $data['title'] = 'Create Mahasiswa';
         return view('/admin/mahasiswa/create', $data);
     }
-    public function edit_mahasiswa()
+    public function edit_mahasiswa($nim)
     {
+        $modelMahasiswa = new MahasiswaModel();        
+
+        // Cari mahasiswa
+        $mahasiswa = $modelMahasiswa->getMahasiwa($nim);
+
+        $data['mahasiswa'] = $mahasiswa;
         $data['title'] = 'Edit Mahasiswa';
-        return view('/admin/mahasiswa/edit', $data);
+
+        return view('/admin/mahasiswa/edit' ,$data);
     }
 
     public function list_mahasiswa(){
@@ -67,6 +74,14 @@ class AdminController extends BaseController
         $data['mataKuliah'] = $model->getMataKuliah();
         return view('/admin/matakuliah/index', $data);
     }
+
+    public function create_mata_kuliah(){
+        $data['title'] = 'Create Mata Kuliah';
+
+        return view('/admin/matakuliah/create', $data);
+
+    }
+    
     public function detail_mata_kuliah($kode){
         $modelMahasiswa = new MahasiswaModel();
         $modelMataKuliah = new MataKuliahModel();
@@ -99,7 +114,7 @@ class AdminController extends BaseController
     }
 
     // DB
-
+    // Mahasiswa
     public function store_mahasiswa(){
         $modelMahasiswa = new MahasiswaModel();
         $modelUser = new UserModel();
@@ -123,4 +138,55 @@ class AdminController extends BaseController
         return redirect()->to('/admin/mahasiswa');
     }
 
+    public function update_mahasiswa($currentNim){
+        $modelMahasiswa = new MahasiswaModel();
+        $modelUser = new UserModel();
+
+        $nim = $this->request->getPost('nim');
+
+        $user = [
+            'user_id' => $nim,
+            'username' => $this->request->getPost('username'),
+            'nama_lengkap' => $this->request->getPost('nama_lengkap')
+        ];
+        
+        if($this->request->getPost('password') != ''){
+            $user['password'] = password_hash($this->request->getPost('password'), PASSWORD_BCRYPT);
+        }
+
+        $mahasiswa = [
+            'nim' => $nim,
+            'tahun_masuk' => $this->request->getPost('tahun_masuk')
+        ];
+
+        $modelUser->update($currentNim, $user);
+        $modelMahasiswa->update($currentNim, $mahasiswa);
+        return redirect()->to('/admin/mahasiswa/detail/'.$nim);
+    }
+
+    public function delete_mahasiswa($nim){
+        $modelUser = Model(UserModel::class);
+
+        $modelUser->delete($nim);
+
+        return redirect()->to('/admin/mahasiswa');
+    }
+
+
+    public function store_mata_kuliah(){
+        $model = Model(MataKuliahModel::class);
+
+        $mataKuliah = [
+            'kode_mata_kuliah' => $this->request->getPost('kode_mata_kuliah'),
+            'nama_mata_kuliah' => $this->request->getPost('nama_mata_kuliah'),
+            'sks' => $this->request->getPost('sks')
+        ];
+
+        $model->insert($mataKuliah);
+        return redirect()->to('/admin/matakuliah');
+    }
+
+    public function update_mata_kuliah(){
+        
+    }
 }

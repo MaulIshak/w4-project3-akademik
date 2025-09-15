@@ -46,7 +46,7 @@ class MahasiswaModel extends Model
 
     public function getMahasiwa($nim = false){
         if($nim){
-            return $this->select('mahasiswa.*, users.username, users.nama_lengkap')
+            return $this->select('mahasiswa.*, users.username, users.nama_lengkap, users.password, ')
                     ->join('users', 'users.user_id = mahasiswa.nim')
                     ->where('mahasiswa.nim', $nim)
                     ->first();

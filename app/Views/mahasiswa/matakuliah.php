@@ -2,6 +2,11 @@
 
 <?= $this->section('main-content') ?>
 
+<?php
+// d($matkul_tersedia);
+// dd($matkul_diambil);
+?>
+
 <h2 class="my-3 mb-4 fw-bold">Ambil Mata Kuliah</h2>
 
 <!-- Form untuk membatalkan mata kuliah -->
@@ -10,7 +15,8 @@
         Mata Kuliah yang Sudah Diambil
     </div>
     <div class="card-body">
-        <form action="/mahasiswa/matakuliah/batalkan" method="post">
+        <form action="/mahasiswa/matakuliah/batal" method="post">
+            <input type="hidden" name="_method" value="DELETE">
             <?= csrf_field() ?>
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -23,17 +29,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Contoh Data, nantinya dari controller -->
+                        <?php
+                        if(isset($matkul_diambil) && !empty($matkul_diambil)):
+                            foreach($matkul_diambil as $mk):
+                        ?>
                         <tr>
                             <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="batal_mk[]" value="IF101" id="batal_IF101">
-                                </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="batal_mk[]" value="<?=$mk['kode_mata_kuliah']?>" id="diambil_<?=$mk['kode_mata_kuliah']?>">
+                            </div>
                             </td>
-                            <td><label for="batal_IF101">IF101</label></td>
-                            <td><label for="batal_IF101">Dasar Pemrograman</label></td>
-                            <td>3</td>
+                            <td><label for="diambil_<?=$mk['kode_mata_kuliah']?>"><?=$mk['kode_mata_kuliah']?></label></td>
+                            <td><label for="diambil_<?=$mk['kode_mata_kuliah']?>"><?=$mk['nama_mata_kuliah']?></label></td>
+                            <td><?=$mk['sks']?></td>
                         </tr>
+                        <?php 
+                                endforeach;
+                            endif;
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -63,27 +76,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Contoh Data, nantinya dari controller -->
+                        <!--Mata Kuliah-->
+                        <?php
+                        if(isset($matkul_tersedia) && !empty($matkul_tersedia)):
+                            foreach($matkul_tersedia as $mk):
+                        ?>
                         <tr>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="ambil_mk[]" value="IF102" id="ambil_IF102">
+                                    <input class="form-check-input" type="checkbox" name="ambil_mk[]" value="<?=$mk['kode_mata_kuliah']?>" id="<?=$mk['kode_mata_kuliah']?>">
                                 </div>
                             </td>
-                            <td><label for="ambil_IF102">IF102</label></td>
-                            <td><label for="ambil_IF102">Struktur Data</label></td>
-                            <td>3</td>
+                            <td><label for="<?=$mk['kode_mata_kuliah']?>"><?=$mk['kode_mata_kuliah']?></label></td>
+                            <td><label for="<?=$mk['kode_mata_kuliah']?>"><?=$mk['nama_mata_kuliah']?></label></td>
+                            <td><?=$mk['sks']?></td>
                         </tr>
-                        <tr>
-                            <td>
-                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="ambil_mk[]" value="IF201" id="ambil_IF201">
-                                </div>
-                            </td>
-                            <td><label for="ambil_IF201">IF201</label></td>
-                            <td><label for="ambil_IF201">Basis Data</label></td>
-                            <td>3</td>
-                        </tr>
+
+                        <?php 
+                                endforeach;
+                            endif;
+                        ?>
                     </tbody>
                 </table>
             </div>
