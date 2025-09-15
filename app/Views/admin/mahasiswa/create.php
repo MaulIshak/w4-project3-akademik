@@ -2,7 +2,9 @@
 
 <?= $this->section('main-content') ?>
 
-<?php $validation = session()->getFlashdata('validation') ?? \Config\Services::validation(); ?>
+<?php $validation = session()->getFlashdata('validation') ?? \Config\Services::validation();
+    d($validation->listErrors());
+?>
 
 <h2 class="my-3 mb-4 fw-bold">Tambah Mahasiswa Baru</h2>
 <p class="text-secondary my-3 pb-3"> Isi form di bawah untuk menambahkan data mahasiswa baru.</p>

@@ -35,10 +35,20 @@ class MahasiswaController extends BaseController
         $userModel = new UserModel();
 
         $validation = \Config\Services::validation();
-        $rules = array_merge(
-            $userModel->getValidationRules(),
-            $mahasiswaModel->getValidationRules()
-        );
+        // $rules = array_merge(
+        //     $userModel->getValidationRules(),
+        //     $mahasiswaModel->getValidationRules()
+        // );
+
+        $nim = $this->request->getPost('nim');
+        $rules = [
+            'nim'          => "required|numeric|exact_length[9]|is_unique[users.user_id,user_id,{$nim}]",
+            'nama_lengkap' => 'required|alpha_space|min_length[3]',
+            'username'     => "required|alpha_numeric|min_length[5]|is_unique[users.username,user_id,{$nim}]",
+            'tahun_masuk'  => 'required|numeric|exact_length[4]',
+            'password'     => 'permit_empty|min_length[8]',
+        ];
+
         $validation->setRules($rules);
 
         if (!$this->validate($validation->getRules())) {

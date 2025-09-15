@@ -19,7 +19,6 @@ class UserModel extends Model
         'username'     => 'required|alpha_numeric|min_length[5]|is_unique[users.username]',
         'password'     => 'required|min_length[8]',
         'nama_lengkap' => 'required|alpha_space|min_length[3]',
-        'role'         => 'required|in_list[admin,mahasiswa]',
     ];
     protected $validationMessages = [
         'user_id' => [
