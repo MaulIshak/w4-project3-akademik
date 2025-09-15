@@ -20,11 +20,19 @@ class UserController extends BaseController
     public function index()
     {
         $matakuliahModel = new MataKuliahModel();
-        $mahasiswa['nama_lengkap'] = session()->get('username');
+        $userModel = new UserModel();
+
+        $matkul_diambil = $matakuliahModel->getMataKuliahByNim($this->nim);
+        $total_sks = 0;
+        foreach($matkul_diambil as $matkul){
+            $total_sks += (int)$matkul['sks'];
+        }
+
         $data = [
             'title' => 'Dashboard Mahasiswa',
-            'matkul_diambil' => $matakuliahModel->getMataKuliahByNim($this->nim),
-            'mahasiswa' => $mahasiswa
+            'mahasiswa' => $userModel->getMahasiswaData($this->nim),
+            'jumlah_matkul' => count($matkul_diambil),
+            'total_sks' => $total_sks
         ];
         return view('mahasiswa/dashboard', $data);
     }
@@ -34,13 +42,20 @@ class UserController extends BaseController
         $userModel = new UserModel();
         $data = [
             'title' => 'Profil Mahasiswa',
-            'user'  => $userModel->getMahasiswaData($this->nim)
+            'mahasiswa'  => $userModel->getMahasiswaData($this->nim)
         ];
         return view('mahasiswa/profile', $data);
     }
 
     public function update_password()
     {
+        $userModel = new UserModel();
+        $user = $userModel->find($this->nim);
+
+        if (!password_verify($this->request->getPost('current_password'), $user['password'])) {
+            return redirect()->back()->withInput()->with('error', 'Password saat ini salah.');
+        }
+
         $rules = [
             'current_password' => 'required',
             'new_password'     => 'required|min_length[8]',
@@ -48,15 +63,9 @@ class UserController extends BaseController
         ];
 
         if (!$this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
-        $userModel = new UserModel();
-        $user = $userModel->find($this->nim);
-
-        if (!password_verify($this->request->getPost('current_password'), $user['password'])) {
-            return redirect()->back()->with('error', 'Password saat ini salah.');
-        }
 
         $userModel->update($this->nim, [
             'password' => password_hash($this->request->getPost('new_password'), PASSWORD_DEFAULT)

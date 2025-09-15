@@ -11,8 +11,15 @@ class MahasiswaController extends BaseController
     public function index()
     {
         $model = new MahasiswaModel();
-        $data['mahasiswa'] = $model->getMahasiwa();
+        $keyword = $this->request->getGet('keyword');
+        $tahun_masuk = $this->request->getGet('tahun_masuk');
+
+        $data['mahasiswa'] = $model->searchAndFilter($keyword, $tahun_masuk);
         $data['title'] = 'Daftar Mahasiswa';
+        $data['tahun_masuk_options'] = $model->getTahunMasukOptions();
+        $data['keyword'] = $keyword;
+        $data['selected_tahun'] = $tahun_masuk;
+
         return view('admin/mahasiswa/index', $data);
     }
 
@@ -32,7 +39,7 @@ class MahasiswaController extends BaseController
         $validation->setRules($mahasiswaModel->getValidationRules());
 
         if (!$this->validate($validation->getRules())) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
         $userData = [
@@ -72,10 +79,12 @@ class MahasiswaController extends BaseController
     {
         $model = new MahasiswaModel();
         $data['mahasiswa'] = $model->getMahasiwa($nim);
+        
 
         if (empty($data['mahasiswa'])) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Mahasiswa dengan NIM ' . $nim . ' tidak ditemukan');
+           return redirect()->to('/admin/mahasiswa')->with('error', 'Mahasiswa dengan NIM ' . $nim . ' tidak ditemukan');
         }
+
         
         $data['title'] = 'Edit Mahasiswa';
         return view('admin/mahasiswa/edit', $data);
@@ -95,7 +104,7 @@ class MahasiswaController extends BaseController
         ];
 
         if (!$this->validate($validationRules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
         $userData = [
@@ -139,4 +148,6 @@ class MahasiswaController extends BaseController
         
         return redirect()->to('/admin/mahasiswa')->with('error', 'Gagal menghapus data mahasiswa.');
     }
+
+    
 }

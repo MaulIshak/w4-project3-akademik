@@ -2,7 +2,7 @@
 
 <?= $this->section('main-content') ?>
 <h2 class="my-3 mb-4 fw-bold">Daftar Mata Kuliah</h2>
-
+<p class="text-secondary my-3 pb-3 "> Berikut adalah daftar mata kuliah yang terdaftar dalam sistem.</p>
 <div class="d-flex my-3 row">
 
   <div class="row col-auto">

@@ -1,6 +1,7 @@
 <?= $this->extend('layout/page_template') ?>
 <?= $this->section('main-content') ?>
 <h2 class="my-3 mb-4 fw-bold">Detail Mahasiswa</h2>
+<p class="text-secondary my-3 pb-3"> Berikut adalah detail informasi mahasiswa beserta mata kuliah yang diambil.</p>
 
 <div class="card">
     <div class="card-body">

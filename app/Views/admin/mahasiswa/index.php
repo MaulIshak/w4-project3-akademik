@@ -2,19 +2,31 @@
 <?= $this->section('main-content'); ?>
 
 <h2 class=" my-3 mb-4 fw-bold">Daftar Mahasiswa</h2>
+<p class="text-secondary my-3 pb-3"> Berikut adalah daftar mahasiswa yang terdaftar dalam sistem.</p>
 <div class="d-flex my-3 row">
 
   <div class="row col-auto">
     <!-- Search Form -->
     <form action="" class="row col-auto">
         <div class="input-group">
-            <input type="text" name="keyword" id="keyword" placeholder="Cari..." class="form-control">
+            <input type="text" name="keyword" id="keyword" placeholder="Cari..." class="form-control col-3">
+              <select name="tahun_masuk" id="tahun_masuk" class="form-select col-1">
+               <option value="">Semua Tahun</option>
+                <?php foreach($tahun_masuk_options as $tahun): ?>
+                    <option value="<?= $tahun['tahun_masuk'] ?>" <?= ($selected_tahun ?? '') == $tahun['tahun_masuk'] ? 'selected' : '' ?>>
+                        <?= $tahun['tahun_masuk'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
             <button type="submit" class="btn btn-primary">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
               </svg>
             </button>
         </div>
+
+
+        
        </form>
     </div>
     

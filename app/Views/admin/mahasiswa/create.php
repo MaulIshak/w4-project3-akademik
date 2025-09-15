@@ -2,9 +2,10 @@
 
 <?= $this->section('main-content') ?>
 
-<?php $validation = \Config\Services::validation(); ?>
+<?php $validation = session()->getFlashdata('validation') ?? \Config\Services::validation(); ?>
 
 <h2 class="my-3 mb-4 fw-bold">Tambah Mahasiswa Baru</h2>
+<p class="text-secondary my-3 pb-3"> Isi form di bawah untuk menambahkan data mahasiswa baru.</p>
 
 <div class="card">
     <div class="card-body">
@@ -45,16 +46,21 @@
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password Default</label>
-                <input type="password" class="form-control <?= $validation->hasError('password') ? 'is-invalid' : '' ?>" id="password" name="password" required>
-                <?php if ($validation->hasError('password')): ?>
-                    <div class="invalid-feedback">
-                        <?= $validation->getError('password') ?>
-                    </div>
-                <?php endif; ?>
+                <div class="input-group">
+                    <input type="password" class="form-control <?= $validation->hasError('password') ? 'is-invalid' : '' ?>" id="password" name="password" required>
+                    <span class="input-group-text toggle-password" style="cursor: pointer;" data-target="password">
+                        <i class="bi bi-eye-slash"></i>
+                    </span>
+                    <?php if ($validation->hasError('password')): ?>
+                        <div class="invalid-feedback">
+                            <?= $validation->getError('password') ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="tahun_masuk" class="form-label">Tahun Masuk</label>
-                <input type="number" class="form-control <?= $validation->hasError('tahun_masuk') ? 'is-invalid' : '' ?>" id="tahun_masuk" name="tahun_masuk" min="2000" max="2100" value="<?= old('tahun_masuk') ?>" required>
+                <input type="number" class="form-control <?= $validation->hasError('tahun_masuk') ? 'is-invalid' : '' ?>" id="tahun_masuk" name="tahun_masuk" min="2000" max="2100" value="<?= old('tahun_masuk', date('Y')) ?>" required>
                 <?php if ($validation->hasError('tahun_masuk')): ?>
                     <div class="invalid-feedback">
                         <?= $validation->getError('tahun_masuk') ?>

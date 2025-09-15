@@ -14,7 +14,15 @@ class AdminController extends BaseController
     // View
     public function index()
     {
-        $data['title'] = 'Dashboard Admin';
+        $mahasiswaModel = new MahasiswaModel();
+        $mataKuliahModel = new MataKuliahModel();
+
+        $data = [
+            'title' => 'Dashboard Admin',
+            'jumlah_mahasiswa' => $mahasiswaModel->countAllResults(),
+            'jumlah_mata_kuliah' => $mataKuliahModel->countAllResults(),
+            'mahasiswa_tanpa_mk' => $mahasiswaModel->getMahasiswaTanpaMatkul(),
+        ];
         return view('/admin/dashboard', $data);
     }
 }

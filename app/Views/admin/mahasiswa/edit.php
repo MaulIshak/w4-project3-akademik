@@ -2,9 +2,13 @@
 
 <?= $this->section('main-content') ?>
 
-<?php $validation = \Config\Services::validation(); ?>
+<?php 
+    $validation = session()->getFlashdata('validation') ?? \Config\Services::validation(); 
+?>
+
 
 <h2 class="my-3 mb-4 fw-bold">Edit Data Mahasiswa</h2>
+<p class="text-secondary my-3 pb-3"> Ubah informasi mahasiswa pada form di bawah ini.</p>
 
 <div class="card">
     <div class="card-body">
@@ -49,13 +53,18 @@
             </div>
              <div class="mb-3">
                 <label for="password" class="form-label">Reset Password</label>
-                <input type="password" class="form-control <?= $validation->hasError('password') ? 'is-invalid' : '' ?>" id="password" name="password" placeholder="Isi untuk mereset password">
+                <div class="input-group">
+                    <input type="password" class="form-control <?= $validation->hasError('password') ? 'is-invalid' : '' ?>" id="password" name="password" placeholder="Isi untuk mereset password">
+                     <span class="input-group-text toggle-password" style="cursor: pointer;" data-target="password">
+                        <i class="bi bi-eye-slash"></i>
+                    </span>
+                    <?php if ($validation->hasError('password')): ?>
+                        <div class="invalid-feedback">
+                            <?= $validation->getError('password') ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
                 <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah password.</small>
-                 <?php if ($validation->hasError('password')): ?>
-                    <div class="invalid-feedback">
-                        <?= $validation->getError('password') ?>
-                    </div>
-                <?php endif; ?>
             </div>
             <div class="d-flex justify-content-end">
                 <a href="<?= route_to('admin.mahasiswa') ?>" class="btn btn-secondary me-2">Batal</a>

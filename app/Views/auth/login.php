@@ -43,12 +43,17 @@
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control <?= $validation->hasError('password') ? 'is-invalid' : '' ?>" id="password" name="password" placeholder="Masukkan password">
-                             <?php if ($validation->hasError('password')): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('password') ?>
-                                </div>
-                            <?php endif; ?>
+                            <div class="input-group">
+                                <input type="password" class="form-control <?= $validation->hasError('password') ? 'is-invalid' : '' ?>" id="password" name="password" placeholder="Masukkan password">
+                                <span class="input-group-text toggle-password" style="cursor: pointer;" data-target="password">
+                                    <i class="bi bi-eye-slash"></i>
+                                </span>
+                                <?php if ($validation->hasError('password')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('password') ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary bg-polban-primary">Login</button>

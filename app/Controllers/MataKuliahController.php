@@ -10,8 +10,10 @@ class MataKuliahController extends BaseController
     public function index()
     {
         $model = new MataKuliahModel();
-        $data['mataKuliah'] = $model->findAll();
+        $keyword = $this->request->getGet('keyword');
+        $data['mataKuliah'] = $model->like('nama_mata_kuliah', $keyword??'')->orLike('kode_mata_kuliah', $keyword??'')->findAll();
         $data['title'] = 'Daftar Mata Kuliah';
+        $data['keyword'] = $keyword;
         return view('admin/matakuliah/index', $data);
     }
 

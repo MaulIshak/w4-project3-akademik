@@ -49,4 +49,36 @@ class MahasiswaModel extends Model
         }
         return $mahasiswa;
     }
+
+        public function searchAndFilter($keyword, $tahun_masuk)
+        {
+        $builder = $this->select('mahasiswa.nim, mahasiswa.tahun_masuk, users.nama_lengkap')
+                        ->join('users', 'users.user_id = mahasiswa.nim');
+
+        if ($keyword) {
+            $builder->groupStart()
+                    ->like('mahasiswa.nim', $keyword)
+                    ->orLike('users.nama_lengkap', $keyword)
+                    ->groupEnd();
+        }
+
+        if ($tahun_masuk) {
+            $builder->where('mahasiswa.tahun_masuk', $tahun_masuk);
+        }
+
+        return $builder->findAll();
+    }
+
+    public function getTahunMasukOptions()
+    {
+        return $this->distinct()->select('tahun_masuk')->orderBy('tahun_masuk', 'DESC')->findAll();
+    }
+
+
+    public function getMahasiswaTanpaMatkul()
+    {
+        return $this->whereNotIn('nim', function($builder) {
+            return $builder->select('nim')->from('mahasiswa_mata_kuliah');
+        })->countAllResults();
+    }
 }

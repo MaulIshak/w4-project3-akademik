@@ -2,13 +2,20 @@
 
 <?= $this->section('main-content') ?>
 
-<?php
-// d($matkul_tersedia);
-// dd($matkul_diambil);
-?>
+<!-- Notifikasi -->
+<?php if(session()->getFlashdata('success')): ?>
+    <div class="alert alert-success" role="alert">
+        <?= session()->getFlashdata('success') ?>
+    </div>
+<?php endif; ?>
+<?php if(session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger" role="alert">
+        <?= session()->getFlashdata('error') ?>
+    </div>
+<?php endif; ?>
 
 <h2 class="my-3 mb-4 fw-bold">Ambil Mata Kuliah</h2>
-
+<p class="text-secondary my-3 pb-3"> Pilih mata kuliah yang ingin Anda ambil atau batalkan.</p>
 <!-- Form untuk membatalkan mata kuliah -->
 <div class="card mb-4">
     <div class="card-header">
