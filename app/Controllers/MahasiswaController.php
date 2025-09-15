@@ -126,17 +126,17 @@ class MahasiswaController extends BaseController
         ];
         
         // Use transaction to ensure data consistency
-        $db = \Config\Database::connect();
-        $db->transStart();
+        // $db = \Config\Database::connect();
+        // $db->transStart();
         
         $userModel->update($nim, $userData);
         $mahasiswaModel->update($nim, $mahasiswaData);
         
-        $db->transComplete();
+        // $db->transComplete();
 
-        if ($db->transStatus() === false) {
-             return redirect()->back()->withInput()->with('error', 'Gagal memperbarui data.');
-        }
+        // if ($db->transStatus() === false) {
+        //      return redirect()->back()->withInput()->with('error', 'Gagal memperbarui data.');
+        // }
 
         return redirect()->to('/admin/mahasiswa')->with('success', 'Data mahasiswa berhasil diperbarui.');
     }
