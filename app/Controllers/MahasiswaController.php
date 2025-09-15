@@ -35,8 +35,11 @@ class MahasiswaController extends BaseController
         $userModel = new UserModel();
 
         $validation = \Config\Services::validation();
-        $validation->setRules($userModel->getValidationRules());
-        $validation->setRules($mahasiswaModel->getValidationRules());
+        $rules = array_merge(
+            $userModel->getValidationRules(),
+            $mahasiswaModel->getValidationRules()
+        );
+        $validation->setRules($rules);
 
         if (!$this->validate($validation->getRules())) {
             return redirect()->back()->withInput()->with('validation', $this->validator);
