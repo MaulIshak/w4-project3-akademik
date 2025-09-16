@@ -1,7 +1,7 @@
 <?= $this->extend('layout/base_template') ?>
 
 <?= $this->section('content') ?>
-<?php $validation = \Config\Services::validation(); ?>
+<?php $validation = session()->get('validation') ?? \Config\Services::validation(); ?>
 <div class="container bg-secondary">
     <div class="row vh-100 d-flex justify-content-center align-items-center">
         <div class="col-md-5">
@@ -9,8 +9,8 @@
                 <div class="card-body p-5">
                     <div class="text-center mb-4">
                         <img src="<?= base_url('img/logo-polban.png') ?>" alt="Logo Polban" style="width: 80px;">
-                        <h3 class="mt-3 mb-0 fw-bold"><span class="text-polban-primary">Akademik</span><span class="text-polban-secondary">Polban</span></h3>
-                        <p class="text-muted">Silakan login untuk melanjutkan</p>
+                        <h3 class="mt-3 mb-0 fw-bold"><span class="text-polban-primary">SiAkad</span><span class="text-polban-secondary">Polban</span></h3>
+                        <p class="text-muted">Sistem akademik polban versi mini</p>
                     </div>
 
                     <!-- Menampilkan notifikasi -->

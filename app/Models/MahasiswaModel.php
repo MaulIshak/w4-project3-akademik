@@ -14,16 +14,16 @@ class MahasiswaModel extends Model
     protected $allowedFields    = ['nim', 'tahun_masuk'];
 
     // Validation
-    protected $validationRules = [
-        'nim'         => 'required|numeric|exact_length[9]|is_unique[mahasiswa.nim]',
-        'tahun_masuk' => 'required|numeric|exact_length[4]',
-    ];
-    protected $validationMessages = [
-        'nim' => [
-            'is_unique' => 'NIM sudah terdaftar.',
-            'exact_length' => 'NIM harus 9 digit.'
-        ]
-    ];
+    // protected $validationRules = [
+    //     'nim'         => 'required|numeric|exact_length[9]|is_unique[mahasiswa.nim]',
+    //     'tahun_masuk' => 'required|numeric|exact_length[4]',
+    // ];
+    // protected $validationMessages = [
+    //     'nim' => [
+    //         'is_unique' => 'NIM sudah terdaftar.',
+    //         'exact_length' => 'NIM harus 9 digit.'
+    //     ]
+    // ];
 
 
     public function getMahasiwa($nim = false)

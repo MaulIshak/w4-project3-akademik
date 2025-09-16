@@ -5,7 +5,7 @@
 <header class="hero-section">
   <div class="text-white d-flex align-items-center justify-content-center gap-4">
     <img src="<?=base_url('img/logo-polban.png')?>" class="img-fluid" style="max-width:75px;" alt="logo polban">
-    <h2 class="fw-bold fs-1"><span class="text-polban-primary">Akademik</span><span class="text-polban-secondary">Polban</span></h2>
+    <h2 class="fw-bold fs-1"><span class="text-polban-primary">SiAkad</span><span class="text-polban-secondary">Polban</span></h2>
   </div>
 </header>
 
@@ -27,7 +27,8 @@
           <a class="nav-link <?= $title=='Daftar Mata Kuliah' ? 'active' : '' ?>" href="/admin/matakuliah">Mata Kuliah</a>
         </li>
       </ul>
-      <form action="/auth/logout" method="post">
+      <form action="/auth/logout" method="post" onsubmit="return confirm('Anda yakin ingin logout?');">
+          <
         <button class="btn btn-danger">Logout</button>
       </form>
     </div>

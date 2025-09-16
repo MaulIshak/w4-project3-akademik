@@ -14,21 +14,21 @@ class UserModel extends Model
     protected $allowedFields    = ['user_id', 'username', 'password', 'role', 'nama_lengkap'];
 
     // Validation
-    protected $validationRules = [
-        'user_id'      => 'required|numeric|exact_length[9]|is_unique[users.user_id]',
-        'username'     => 'required|alpha_numeric|min_length[5]|is_unique[users.username]',
-        'password'     => 'required|min_length[8]',
-        'nama_lengkap' => 'required|alpha_space|min_length[3]',
-    ];
-    protected $validationMessages = [
-        'user_id' => [
-            'is_unique' => 'NIM/User ID sudah terdaftar.',
-            'exact_length' => 'NIM/User ID harus 9 digit.'
-        ],
-        'username' => [
-            'is_unique' => 'Username sudah digunakan.'
-        ]
-    ];
+    // protected $validationRules = [
+    //     'user_id'      => 'required|numeric|exact_length[9]|is_unique[users.user_id]',
+    //     'username'     => 'required|alpha_numeric|min_length[5]|is_unique[users.username]',
+    //     'password'     => 'required|min_length[8]',
+    //     'nama_lengkap' => 'required|alpha_space|min_length[3]',
+    // ];
+    // protected $validationMessages = [
+    //     'user_id' => [
+    //         'is_unique' => 'NIM/User ID sudah terdaftar.',
+    //         'exact_length' => 'NIM/User ID harus 9 digit.'
+    //     ],
+    //     'username' => [
+    //         'is_unique' => 'Username sudah digunakan.'
+    //     ]
+    // ];
 
     public function getMahasiswaData($nim)
     {

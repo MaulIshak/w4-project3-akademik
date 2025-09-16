@@ -11,7 +11,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class AdminController extends BaseController
 {
-    // View
+    
     public function index()
     {
         $mahasiswaModel = new MahasiswaModel();
