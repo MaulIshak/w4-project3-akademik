@@ -26,9 +26,13 @@ class MataKuliahController extends BaseController
     public function store()
     {
         $model = new MataKuliahModel();
-
-        if (!$this->validate($model->getValidationRules())) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        $validationRules = [
+            'kode_mata_kuliah' => 'required|alpha_numeric_punct|min_length[5]|max_length[10]|is_unique[mata_kuliah.kode_mata_kuliah]',
+            'nama_mata_kuliah' => 'required|min_length[3]',
+            'sks'              => 'required|integer|greater_than[0]',
+        ];
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
         $model->save([
@@ -71,12 +75,13 @@ class MataKuliahController extends BaseController
         $model = new MataKuliahModel();
         
         $validationRules = [
+            'kode_mata_kuliah' => 'required|alpha_numeric_punct|min_length[5]|max_length[10]|is_unique[mata_kuliah.kode_mata_kuliah,kode_mata_kuliah,'.$kode.']',
             'nama_mata_kuliah' => 'required|min_length[3]',
-            'sks'              => 'required|integer|in_list[1,2,3,4,6]',
+            'sks'              => 'required|integer|greater_than[0]',
         ];
 
         if (!$this->validate($validationRules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->back()->withInput()->with('validation', $this->validator);
         }
 
         $model->update($kode, [

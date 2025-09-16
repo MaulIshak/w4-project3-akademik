@@ -1,7 +1,7 @@
 <?= $this->extend('layout/page_template') ?>
 
 <?= $this->section('main-content') ?>
-<?php $validation = \Config\Services::validation(); ?>
+<?php $validation = session()->get('validation') ?? \Config\Services::validation(); ?>
 <h2 class="my-3 mb-4 fw-bold">Edit Mata Kuliah</h2>
 <p class="text-secondary my-3 pb-3"> Ubah informasi mata kuliah pada form di bawah ini.</p>
 <div class="card">
@@ -11,7 +11,12 @@
             <input type="hidden" name="_method" value="PUT">
             <div class="mb-3">
                 <label for="kode_mata_kuliah" class="form-label">Kode Mata Kuliah</label>
-                <input type="text" class="form-control" id="kode_mata_kuliah" name="kode_mata_kuliah" value="<?= $matakuliah['kode_mata_kuliah'] ?>" readonly>
+                <input type="text" class="form-control <?= $validation->hasError('kode_mata_kuliah') ? 'is-invalid' : '' ?>" id="kode_mata_kuliah" name="kode_mata_kuliah" value="<?= $matakuliah['kode_mata_kuliah'] ?>">
+                 <?php if ($validation->hasError('kode_mata_kuliah')): ?>
+                    <div class="invalid-feedback">
+                        <?= $validation->getError('kode_mata_kuliah') ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="mb-3">
                 <label for="nama_mata_kuliah" class="form-label">Nama Mata Kuliah</label>

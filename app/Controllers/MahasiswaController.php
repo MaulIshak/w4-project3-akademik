@@ -42,11 +42,11 @@ class MahasiswaController extends BaseController
 
         $nim = $this->request->getPost('nim');
         $rules = [
-            'nim'          => "required|numeric|exact_length[9]|is_unique[users.user_id,user_id,{$nim}]",
+            'nim'          => "required|numeric|exact_length[9]|is_unique[users.user_id]",
             'nama_lengkap' => 'required|alpha_space|min_length[3]',
-            'username'     => "required|alpha_numeric|min_length[5]|is_unique[users.username,user_id,{$nim}]",
+            'username'     => "required|alpha_numeric|min_length[5]|is_unique[users.username]",
             'tahun_masuk'  => 'required|numeric|exact_length[4]',
-            'password'     => 'permit_empty|min_length[8]',
+            'password'     => 'required|min_length[8]',
         ];
 
         $validation->setRules($rules);

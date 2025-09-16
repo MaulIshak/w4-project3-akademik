@@ -3,7 +3,7 @@
 <?= $this->section('main-content') ?>
 
 <?php $validation = session()->getFlashdata('validation') ?? \Config\Services::validation();
-    d($validation->listErrors());
+    // d($validation->listErrors());
 ?>
 
 <h2 class="my-3 mb-4 fw-bold">Tambah Mahasiswa Baru</h2>

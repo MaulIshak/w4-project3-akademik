@@ -19,14 +19,14 @@ class MataKuliahModel extends Model
         'nama_mata_kuliah' => 'required|min_length[3]',
         'sks'              => 'required|integer',
     ];
-    protected $validationMessages = [
-        'kode_mata_kuliah' => [
-            'is_unique' => 'Kode Mata Kuliah sudah ada.',
-        ],
-        'sks' => [
-            'in_list' => 'Jumlah SKS tidak valid.'
-        ]
-    ];
+    // protected $validationMessages = [
+    //     'kode_mata_kuliah' => [
+    //         'is_unique' => 'Kode Mata Kuliah sudah ada.',
+    //     ],
+    //     'sks' => [
+    //         'in_list' => 'Jumlah SKS tidak valid.'
+    //     ]
+    // ];
 
     public function getMataKuliahByNim($nim)
     {

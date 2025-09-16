@@ -1,7 +1,7 @@
 <?= $this->extend('layout/page_template') ?>
 
 <?= $this->section('main-content') ?>
-<?php $validation = \Config\Services::validation(); ?>
+<?php $validation = session()->get('validation') ?? \Config\Services::validation(); ?>
 <h2 class="my-3 mb-4 fw-bold">Tambah Mata Kuliah</h2>
 <p class="text-secondary my-3 pb-3"> Gunakan form di bawah ini untuk menambahkan mata kuliah baru ke dalam sistem.</p>
 <div class="card">
@@ -28,7 +28,7 @@
             </div>
             <div class="mb-3">
                 <label for="sks" class="form-label">Jumlah SKS</label>
-                <input type="number" class="form-control <?= $validation->hasError('sks') ? 'is-invalid' : '' ?>" id="sks" name="sks" min="1" max="6" value="<?= old('sks') ?>" required>
+                <input type="number" class="form-control <?= $validation->hasError('sks') ? 'is-invalid' : '' ?>" id="sks" name="sks" min="1" value="<?= old('sks') ?>" required>
                  <?php if ($validation->hasError('sks')): ?>
                     <div class="invalid-feedback">
                         <?= $validation->getError('sks') ?>
