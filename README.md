@@ -1,13 +1,12 @@
-# w4-project3-akademik
+# Sistem Akademik
 
-Sistem Akademik Sederhana berbasis web yang dikembangkan menggunakan framework CodeIgniter 4 (CI4). Proyek ini mendemonstrasikan fitur-fitur dasar seperti manajemen data mahasiswa, dosen, mata kuliah, dan nilai.
+Sistem Akademik Sederhana berbasis web yang dikembangkan menggunakan framework CodeIgniter 4 (CI4). Proyek ini mendemonstrasikan fitur-fitur dasar seperti manajemen data mahasiswa dan mata kuliah.
 
 ## Fitur
 
 - **Manajemen Mahasiswa:** Tambah, edit, hapus, dan lihat data mahasiswa.
-- **Manajemen Dosen:** Kelola data dosen, termasuk penambahan dan penghapusan.
 - **Manajemen Mata Kuliah:** Atur data mata kuliah yang tersedia.
-- **Pengelolaan Nilai:** Input dan update nilai mahasiswa untuk setiap mata kuliah.
+- **Enroll Mata Kuliah:** Mahasiswa dappat mengambil beberapa mata kuliah yang tersedia.
 
 ## Teknologi yang Digunakan
 
