@@ -30,9 +30,9 @@ class MataKuliahModel extends Model
 
     public function getMataKuliahByNim($nim)
     {
-        return $this->select('mata_kuliah.*, mmk.tanggal_mengambil')
-            ->join('mahasiswa_mata_kuliah as mmk', 'mmk.kode_mata_kuliah = mata_kuliah.kode_mata_kuliah')
-            ->where('mmk.nim', $nim)
+        return $this->select('mata_kuliah.*, mahasiswa_mk.tanggal_mengambil')
+            ->join('mahasiswa_mata_kuliah as mahasiswa_mk', 'mahasiswa_mk.kode_mata_kuliah = mata_kuliah.kode_mata_kuliah')
+            ->where('mahasiswa_mk.nim', $nim)
             ->findAll();
     }
     
@@ -49,11 +49,11 @@ class MataKuliahModel extends Model
     {
         $matakuliah = $this->find($kode);
         if($matakuliah){
-            $builder = $this->db->table('mahasiswa_mata_kuliah mmk');
-            $builder->select('m.nim, u.nama_lengkap, mmk.tanggal_mengambil');
-            $builder->join('mahasiswa m', 'm.nim = mmk.nim');
+            $builder = $this->db->table('mahasiswa_mata_kuliah mahasiswa_mk');
+            $builder->select('m.nim, u.nama_lengkap, mahasiswa_mk.tanggal_mengambil');
+            $builder->join('mahasiswa m', 'm.nim = mahasiswa_mk.nim');
             $builder->join('users u', 'u.user_id = m.nim');
-            $builder->where('mmk.kode_mata_kuliah', $kode);
+            $builder->where('mahasiswa_mk.kode_mata_kuliah', $kode);
             $matakuliah['mahasiswa'] = $builder->get()->getResultArray();
         }
         return $matakuliah;

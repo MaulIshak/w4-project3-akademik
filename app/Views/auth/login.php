@@ -2,7 +2,7 @@
 
 <?= $this->section('content') ?>
 <?php $validation = session()->get('validation') ?? \Config\Services::validation(); ?>
-<div class="container bg-secondary">
+<div class="container">
     <div class="row vh-100 d-flex justify-content-center align-items-center">
         <div class="col-md-5">
             <div class="card shadow-sm">

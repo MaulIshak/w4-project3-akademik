@@ -12,35 +12,13 @@
   <title><?=$title?></title>
 </head>
 <body class="bg-secondary">
-  <div class="container bg-light p-0">
+  <div class="bg-light p-0 min-vh-100 d-flex flex-column ">
     <?= $this->renderSection('content'); ?>
   </div>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
+    <script src="<?=base_url('js/base.js')?>" ></script>
     <script>
-    function togglePasswordVisibility(inputId) {
-      const passwordInput = document.getElementById(inputId);
-      const icon = passwordInput.nextElementSibling.querySelector('i');
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        icon.classList.remove('bi-eye-slash');
-        icon.classList.add('bi-eye');
-      } else {
-        passwordInput.type = "password";
-        icon.classList.remove('bi-eye');
-        icon.classList.add('bi-eye-slash');
-      }
-    }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const passwordToggles = document.querySelectorAll('.toggle-password');
-      passwordToggles.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-          const targetId = this.getAttribute('data-target');
-          togglePasswordVisibility(targetId);
-        });
-      });
-    });
    </script>
 </body>
 </html>
