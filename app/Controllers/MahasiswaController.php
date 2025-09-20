@@ -162,5 +162,15 @@ class MahasiswaController extends BaseController
         return redirect()->to('/admin/mahasiswa')->with('error', 'Gagal menghapus data mahasiswa.');
     }
 
-    
+    // API
+    public function search()
+    {
+        $model = new MahasiswaModel();
+        $keyword = $this->request->getGet('keyword');
+        $tahun_masuk = $this->request->getGet('tahun_masuk');
+
+        $mahasiswa = $model->searchAndFilter($keyword, $tahun_masuk);
+        
+        return $this->response->setJSON($mahasiswa);
+    }
 }

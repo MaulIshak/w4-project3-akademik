@@ -101,4 +101,13 @@ class MataKuliahController extends BaseController
 
         return redirect()->to('/admin/matakuliah')->with('error', 'Gagal menghapus mata kuliah.');
     }
+
+    public function search()
+    {
+        $model = new MataKuliahModel();
+        $keyword = $this->request->getGet('keyword');
+        $mataKuliah = $model->like('nama_mata_kuliah', $keyword??'')->orLike('kode_mata_kuliah', $keyword??'')->findAll();
+
+        return $this->response->setJSON($mataKuliah);
+    }
 }

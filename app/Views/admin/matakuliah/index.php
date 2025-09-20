@@ -36,7 +36,7 @@
                 <th scope="col" class="w-25">Aksi</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody-data">
         <?php
             $count = 1;
             if(!empty($mataKuliah)):

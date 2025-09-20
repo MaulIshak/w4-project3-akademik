@@ -65,14 +65,16 @@
 </div>
 
 <!-- Form untuk mengambil mata kuliah baru -->
-<div class="card">
+<div class="card matakuliah-tersedia">
     <div class="card-header">
         Mata Kuliah Tersedia
     </div>
+
     <div class="card-body">
+        <p class="sks-terpilih">SKS Terpilih: 0</p>
         <form action="/mahasiswa/matakuliah/ambil" method="post">
              <?= csrf_field() ?>
-            <div class="table-responsive">
+            <div class="table-responsive matkul-tersedia">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -96,7 +98,7 @@
                             </td>
                             <td><label for="<?=$mk['kode_mata_kuliah']?>"><?=$mk['kode_mata_kuliah']?></label></td>
                             <td><label for="<?=$mk['kode_mata_kuliah']?>"><?=$mk['nama_mata_kuliah']?></label></td>
-                            <td><?=$mk['sks']?></td>
+                            <td><label class="sks" for="<?=$mk['kode_mata_kuliah']?>"><?=$mk['sks']?></label></td>
                         </tr>
 
                         <?php 

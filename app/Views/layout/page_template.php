@@ -31,12 +31,33 @@
           <a class="nav-link <?= $title=='Daftar Mata Kuliah' ? 'active' : '' ?>" href="/admin/matakuliah">Mata Kuliah</a>
         </li>
       </ul>
-      <form action="/auth/logout" method="post" onsubmit="return confirm('Anda yakin ingin logout?');">
-        <button class="btn btn-danger">Logout</button>
-      </form>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Logout </button>
     </div>
   </div>
 </nav>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Konfirmasi Keluar</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Yakin ingin keluar dari sistem?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <form action="/auth/logout" method="post">
+          <button type="submit" class="btn btn-danger">
+          Logout </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
   <main class="p-3">
     <!-- Notifikasi -->
     <?php if(session()->getFlashdata('success')): ?>

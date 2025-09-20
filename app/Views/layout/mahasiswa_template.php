@@ -42,4 +42,5 @@
     &copy; Polban <?= date('Y') ?>
 </footer>
 
+<script src="<?= base_url('js/matakuliah.js')?>"></script>
 <?= $this->endsection() ?>

@@ -28,6 +28,9 @@ $routes->group('admin', ['filter' => 'auth:admin'], static function ($routes) {
         $routes->get('edit/(:segment)', 'MahasiswaController::edit/$1', ['as' => 'admin.mahasiswa.edit']);
         $routes->put('update/(:segment)', 'MahasiswaController::update/$1', ['as' => 'admin.mahasiswa.update']);
         $routes->delete('delete/(:segment)', 'MahasiswaController::delete/$1', ['as' => 'admin.mahasiswa.delete']);
+
+        // API
+        $routes->get('search', 'MahasiswaController::search');
     });
 
     // Mata Kuliah CRUD
@@ -39,6 +42,9 @@ $routes->group('admin', ['filter' => 'auth:admin'], static function ($routes) {
         $routes->get('edit/(:segment)', 'MataKuliahController::edit/$1', ['as' => 'admin.matakuliah.edit']);
         $routes->put('update/(:segment)', 'MataKuliahController::update/$1', ['as' => 'admin.matakuliah.update']);
         $routes->delete('delete/(:segment)', 'MataKuliahController::delete/$1', ['as' => 'admin.matakuliah.delete']);
+        
+        // API
+        $routes->get('search', 'MataKuliahController::search');
     });
 });
 
