@@ -83,6 +83,9 @@ class UserController extends BaseController
             'matkul_tersedia'  => $matkulModel->getMataKuliahExceptNim($this->nim),
             'matkul_diambil'   => $matkulModel->getMataKuliahByNim($this->nim),
         ];
+        if($this->request->isAJAX()){
+            return $this->response->setJSON($data);
+        }
 
         return view('mahasiswa/matakuliah', $data);
     }
@@ -107,6 +110,10 @@ class UserController extends BaseController
 
         $mahasiswaMatkulModel->insertBatch($data);
 
+        if($this->request->isAJAX()){
+            return $this->response->setJSON(['success' => true, 'message' => 'Mata kuliah berhasil diambil.']);
+        }
+
         return redirect()->to('/mahasiswa/matakuliah')->with('success', 'Mata kuliah berhasil diambil.');
     }
 
@@ -122,6 +129,10 @@ class UserController extends BaseController
         $mahasiswaMatkulModel->where('nim', $this->nim)
                              ->whereIn('kode_mata_kuliah', $kodeMatkul)
                              ->delete();
+                             
+        if($this->request->isAJAX()){
+            return $this->response->setJSON(['success' => true, 'message' => 'Mata kuliah berhasil dibatalkan.']);
+        }
 
         return redirect()->to('/mahasiswa/matakuliah')->with('success', 'Mata kuliah berhasil dibatalkan.');
     }

@@ -25,7 +25,7 @@
         <form action="/mahasiswa/matakuliah/batal" method="post">
             <input type="hidden" name="_method" value="DELETE">
             <?= csrf_field() ?>
-            <div class="table-responsive">
+            <div class="table-responsive matkul-diambil">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -109,7 +109,7 @@
                 </table>
             </div>
             <div class="d-flex justify-content-end mt-3">
-                 <button type="submit" class="btn btn-success">Ambil Mata Kuliah yang Dipilih</button>
+                 <button type="submit" class="btn btn-success" id="ambil-button">Ambil Mata Kuliah yang Dipilih</button>
             </div>
         </form>
     </div>
