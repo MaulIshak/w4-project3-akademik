@@ -23,7 +23,7 @@ class MahasiswaController extends BaseController
         if($this->request->isAJAX()){
             return $this->response->setJSON($data['mahasiswa']);
         }
-        
+
         return view('admin/mahasiswa/index', $data);
     }
 
@@ -160,9 +160,14 @@ class MahasiswaController extends BaseController
     {
         $userModel = new UserModel();
         if ($userModel->delete($nim)) {
+            if($this->request->isAJAX()){
+                return $this->response->setJSON(['success' => true, 'message' => 'Data mahasiswa berhasil dihapus.']);
+            }
             return redirect()->to('/admin/mahasiswa')->with('success', 'Data mahasiswa berhasil dihapus.');
         }
-        
+        if($this->request->isAJAX()){
+            return $this->response->setJSON(['success' => false, 'message' => 'Gagal menghapus data mahasiswa.']);
+        }
         return redirect()->to('/admin/mahasiswa')->with('error', 'Gagal menghapus data mahasiswa.');
     }
 
