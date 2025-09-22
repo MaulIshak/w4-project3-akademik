@@ -36,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
+                        <!-- <?php
                         if(isset($matkul_diambil) && !empty($matkul_diambil)):
                             foreach($matkul_diambil as $mk):
                         ?>
@@ -53,7 +53,7 @@
                         <?php 
                                 endforeach;
                             endif;
-                        ?>
+                        ?> -->
                     </tbody>
                 </table>
             </div>
@@ -85,7 +85,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--Mata Kuliah-->
+                        <!-- Mata Kuliah
                         <?php
                         if(isset($matkul_tersedia) && !empty($matkul_tersedia)):
                             foreach($matkul_tersedia as $mk):
@@ -104,7 +104,7 @@
                         <?php 
                                 endforeach;
                             endif;
-                        ?>
+                        ?> -->
                     </tbody>
                 </table>
             </div>
