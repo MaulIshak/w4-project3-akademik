@@ -20,6 +20,10 @@ class MahasiswaController extends BaseController
         $data['keyword'] = $keyword;
         $data['selected_tahun'] = $tahun_masuk;
 
+        if($this->request->isAJAX()){
+            return $this->response->setJSON($data['mahasiswa']);
+        }
+        
         return view('admin/mahasiswa/index', $data);
     }
 
