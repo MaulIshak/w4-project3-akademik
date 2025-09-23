@@ -69,7 +69,7 @@ if (document.getElementById("createMatkulForm")) {
   const kodeMk = document.getElementById("kode_mata_kuliah");
   const namaMk = document.getElementById("nama_mata_kuliah");
   const sks = document.getElementById("sks");
-  const submitBtn = document.querySelector("button[type='submit']");
+  const submitBtn = document.querySelector("button[type='submit']#simpan");
   const inputs = [kodeMk, namaMk, sks];
   submitBtn.disabled = true;
 

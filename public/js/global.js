@@ -1,5 +1,4 @@
 // Buat alert untuk keberhasilan mengambil
-
 function showAlert(response, succMsg, errMsg) {
   const main = document.querySelector("main");
   const alert = document.createElement("div");

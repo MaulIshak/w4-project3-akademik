@@ -37,7 +37,7 @@
             </div>
             <div class="d-flex justify-content-end">
                 <a href="/admin/matakuliah" class="btn btn-secondary me-2">Batal</a>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
             </div>
         </form>
     </div>

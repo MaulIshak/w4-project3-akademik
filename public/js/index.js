@@ -128,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }, 1000);
         }, 1000);
       }, 1000);
-      
     }
   });
 
@@ -151,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) {
         throw new Error(`Gagal delete: ${response.status}`);
       }
+      showAlert(response, "Data berhasil dihapus", "Data gagal dihapus");
 
       // Tutup modal
       deleteConfirmModal.hide();
@@ -164,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Error delete:", err);
       alert("Terjadi kesalahan saat menghapus data.");
+      // showAlert(response, "Data berhasil dihapus", "Data gagal dihapus");
     }
   });
 });
