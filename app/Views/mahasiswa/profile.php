@@ -47,7 +47,7 @@
                 Ubah Password
             </div>
             <div class="card-body">
-                <form action="<?= route_to('mahasiswa.password.update') ?>" method="post">
+                <form id="passwordResetForm" action="<?= route_to('mahasiswa.password.update') ?>" method="post">
                     <?= csrf_field() ?>
                     <div class="mb-3">
                         <label for="current_password" class="form-label">Password Saat Ini</label>
@@ -56,11 +56,11 @@
                             <span class="input-group-text toggle-password" style="cursor: pointer;" data-target="current_password">
                                 <i class="bi bi-eye-slash"></i>
                             </span>
+                            <div class="invalid-feedback">
                              <?php if ($validation->hasError('current_password')): ?>
-                                <div class="invalid-feedback">
                                     <?= $validation->getError('current_password') ?>
+                                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -70,11 +70,11 @@
                              <span class="input-group-text toggle-password" style="cursor: pointer;" data-target="new_password">
                                 <i class="bi bi-eye-slash"></i>
                             </span>
+                            <div class="invalid-feedback">
                             <?php if ($validation->hasError('new_password')): ?>
-                                <div class="invalid-feedback">
                                     <?= $validation->getError('new_password') ?>
+                                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                      <div class="mb-3">
@@ -84,14 +84,14 @@
                             <span class="input-group-text toggle-password" style="cursor: pointer;" data-target="confirm_password">
                                 <i class="bi bi-eye-slash"></i>
                             </span>
+                            <div class="invalid-feedback">
                             <?php if ($validation->hasError('confirm_password')): ?>
-                                <div class="invalid-feedback">
                                     <?= $validation->getError('confirm_password') ?>
+                                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <button type="submit" class="btn btn-primary" id="simpan">Simpan Perubahan</button>
                 </form>
             </div>
         </div>

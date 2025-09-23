@@ -30,16 +30,16 @@
                         </div>
                     <?php endif; ?>
 
-                    <form action="<?= route_to('login.attempt') ?>" method="post">
+                    <form id="loginForm"  action="<?= route_to('login.attempt') ?>" method="post">
                         <?= csrf_field() ?>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control <?= $validation->hasError('username') ? 'is-invalid' : '' ?>" id="username" name="username" placeholder="Masukkan username" value="<?= old('username') ?>">
+                            <div class="invalid-feedback">
                              <?php if ($validation->hasError('username')): ?>
-                                <div class="invalid-feedback">
                                     <?= $validation->getError('username') ?>
+                                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label">Password</label>
@@ -48,11 +48,11 @@
                                 <span class="input-group-text toggle-password" style="cursor: pointer;" data-target="password">
                                     <i class="bi bi-eye-slash"></i>
                                 </span>
+                                <div class="invalid-feedback">
                                 <?php if ($validation->hasError('password')): ?>
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('password') ?>
-                                    </div>
-                                <?php endif; ?>
+                                    <?= $validation->getError('password') ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                         <div class="d-grid">

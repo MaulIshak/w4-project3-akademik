@@ -15,9 +15,11 @@
   <div class="bg-light p-0 min-vh-100 d-flex flex-column ">
     <?= $this->renderSection('content'); ?>
   </div>
+    <script src="<?=base_url('js/global.js')?>" ></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="<?=base_url('js/index.js')?>" ></script>
     <script src="<?=base_url('js/toggle_password.js')?>" ></script>
     <script src="<?=base_url('js/validation.js')?>" ></script>
+    <script src="<?= base_url('js/validation_forms.js') ?>"></script>
 </body>
 </html>

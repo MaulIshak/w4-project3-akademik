@@ -58,7 +58,9 @@
                 </table>
             </div>
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan mata kuliah yang dipilih?');">Batalkan yang Dipilih</button>
+                <button type="button" class="btn btn-danger" id="batal-matakuliah" disabled data-bs-toggle="modal" data-bs-target="#batalMkModal">
+                 Batalkan yang Dipilih
+                </button>
             </div>
         </form>
     </div>
@@ -72,7 +74,7 @@
 
     <div class="card-body">
         <p class="sks-terpilih">SKS Terpilih: 0</p>
-        <form action="/mahasiswa/matakuliah/ambil" method="post">
+        <form action="/mahasiswa/matakuliah/ambil" method="post" id="ambilForm">
              <?= csrf_field() ?>
             <div class="table-responsive matkul-tersedia">
                 <table class="table table-striped">
@@ -116,4 +118,3 @@
 </div>
 
 <?= $this->endSection() ?>
-

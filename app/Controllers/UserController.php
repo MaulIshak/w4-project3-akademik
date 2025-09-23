@@ -93,8 +93,15 @@ class UserController extends BaseController
     public function ambil_mata_kuliah()
     {
         $mahasiswaMatkulModel = new MahasiswaMataKuliahModel();
-        $kodeMatkul = $this->request->getPost('ambil_mk');
-        
+        $kodeMatkul = [];
+        if($this->request->isAJAX()) {
+            $data = $this->request->getJSON();
+            foreach ($data as $item) {
+                $kodeMatkul[] = $item->kode_mata_kuliah;
+            }
+        } else {
+            $kodeMatkul = $this->request->getPost('ambil_mk');
+        }
         if (empty($kodeMatkul)) {
             return redirect()->back()->with('error', 'Tidak ada mata kuliah yang dipilih.');
         }
@@ -120,7 +127,17 @@ class UserController extends BaseController
     public function hapus_mata_kuliah()
     {
         $mahasiswaMatkulModel = new MahasiswaMataKuliahModel();
-        $kodeMatkul = $this->request->getPost('batal_mk');
+
+        $kodeMatkul =[];
+
+        if($this->request->isAJAX()) {
+            $data = $this->request->getJSON();
+            foreach ($data as $item) {
+                $kodeMatkul[] = $item->kode_mata_kuliah;
+            }
+        } else {
+            $kodeMatkul = $this->request->getPost('batal_mk');
+        }
 
         if (empty($kodeMatkul)) {
             return redirect()->back()->with('error', 'Tidak ada mata kuliah yang dipilih.');
